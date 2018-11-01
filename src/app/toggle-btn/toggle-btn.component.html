@@ -1,0 +1,19 @@
+<div 
+	class="toggle-box button-{{ buttonClass }}"
+	[class.checked]="data['checked']"
+	[class.unchecked]="!data['checked']"
+	(click)="check()">
+
+	<div class="photo" *ngIf="hasMedia">
+		<img src="{{ assetUrl + '/assets/images/icons/2017/' + buttonClass + '.png' }}">
+	</div>
+
+	<div class="photo" *ngIf="data['imageUrl']">
+		<img src="{{ data['imageUrl'] }}" alt="{{ data['name'] }}" >
+	</div>
+	
+	<div class="title">{{ label }}</div>
+
+	<i class="check-icon fa fa-check-square-o"></i>
+	<i class="minus-icon fa fa-times"></i>
+</div>

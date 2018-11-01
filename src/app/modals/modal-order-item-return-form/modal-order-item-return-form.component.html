@@ -1,0 +1,19 @@
+<div class="modal-header">
+  <h4 class="modal-title">Return Item</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <app-order-item-return-form [data]="orderItem"></app-order-item-return-form>
+</div>
+<div class="modal-footer">
+  <button 
+    type="submit"
+    [disabled]="!orderItemReturnForm.orderItemReturnForm.valid" 
+    class="button button-orange" 
+    (click)="activeModal.close(orderItemReturnForm)"
+  >
+    Save
+  </button>
+</div>

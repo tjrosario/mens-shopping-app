@@ -1,0 +1,15 @@
+.perfect-fit-public {
+  img {
+    margin: 0 auto;
+  }
+
+  .row {
+    margin-top: $gutter * 2;
+
+    .span6 {
+      @include media($tablet) {
+        margin-bottom: $gutter;
+      }
+    }
+  }
+}

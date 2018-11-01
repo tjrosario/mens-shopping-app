@@ -1,0 +1,46 @@
+<div class="account billing">
+  <div class="wrapper">
+
+    <h3>Billing Info</h3>
+
+    <div class="row">
+      <div class="">
+
+        <p *ngIf="loading">Fetching billing info&hellip;</p>
+
+        <div class="toggle-item row" *ngIf="billingInfo && !changingBillingInfo">
+          <div class="span9">
+            <div class="content row">
+              <div class="span2">
+                <i class="fa fa-cc-{{ selectedCreditCardBrand.id }} credit-card-logo"></i>
+              </div>
+              <div class="span10">
+                {{ billingInfo.card_type }} ending in {{ billingInfo.last_four }} 
+              </div>
+            </div>
+          </div>
+
+          <div class="span3">
+            <div class="actions">
+              <div class="button edit" (click)="updateBillingInfo()">Edit</div>
+            </div>
+          </div>
+        </div>
+
+        <div [hidden]="billingInfo !== null && !changingBillingInfo">
+
+          <app-recurly-form 
+            [data]="billingInfo" 
+            [onSubmit]="updatePaymentMethod.bind(this)"
+            [onCancel]="cancelUpdatePaymentMethod.bind(this)"
+            [loading]="loadingPayment"
+          >
+          </app-recurly-form>
+        </div>
+
+
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,145 @@
+<div class="account preferences">
+  <div class="wrapper">
+
+    <h3>Preferences</h3>
+
+    <ngb-tabset #t="ngbTabset">
+
+      <ngb-tab title="Styles" id="tab-style">
+        <ng-template ngbTabContent>
+
+          <p *ngIf="stylePrefsLoading">Fetching style preferences&hellip;</p>
+
+          <p *ngIf="productPreferences.length > 0">Manage your style preferences by clicking any of the categories below.</p>
+
+          <div class="row style">
+            <div *ngFor="let productPreference of productPreferences">
+              <div 
+                class="toggle-item slider"
+                [class.open]="productPreference.open"
+              >
+                <header (click)="togglePreference(productPreference)" class="row">
+                  <div class="span9">
+                    <h4>{{ productPreference.category }}</h4>
+                  </div>
+                  <div class="span3 align-right">
+                    <i class="fa fa-caret-right"></i>
+                    <i class="fa fa-caret-down"></i>
+                  </div>
+                </header>
+                <div class="content">
+
+                  <!-- productMeasurements -->
+                  <ul class="reset">
+                    <li *ngFor="let productMeasurement of productPreference.productMeasurements">
+
+                      <h5>{{ productMeasurement.name }}</h5>
+
+                      <!-- sizes -->
+                      <div class="buttons col3-mobile">
+                        <ul class="list">
+                          <li class="" *ngFor="let allowedSize of productMeasurement.allowedSizes">
+                            <div class="toggle-box" 
+                              (click)="toggleMeasurementPreference(allowedSize)" 
+                              [class.checked]="allowedSize.selected"
+                              [class.unchecked]="!allowedSize.selected"
+                            >
+                              <span>{{ allowedSize.value }}</span>
+                              <i class="fa fa-check-square-o"></i>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+
+                    </li>
+                  </ul>
+                  <!-- /productMeasurements -->
+
+                  <!-- characteristsics -->
+                  <ul class="reset">
+                    <li *ngFor="let characteristsic of productPreference.characteristics">
+                      <h5>{{ characteristsic.name }}</h5>
+
+                      <!-- sizes -->
+                      <div class="buttons toggle-box-square col3-mobile">
+                        <ul class="antipref list">
+                          <li class="" *ngFor="let allowedAttribute of characteristsic.allowedAttributes">
+                            <div class="toggle-box" 
+                              (click)="toggleProductPreference(allowedAttribute)" 
+                              [class.checked]="allowedAttribute.selected"
+                              [class.unchecked]="!allowedAttribute.selected"
+                            >
+                              <span>{{ allowedAttribute.value }}</span>
+                              <i class="check-icon fa fa-check-square-o"></i>
+                              <i class="minus-icon fa fa-times"></i>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+
+                    </li>
+                  </ul>
+                  <!-- /characteristsics -->
+
+                  <!-- priceRanges -->
+                  <h5>Price Ranges</h5>
+                  <div class="buttons col3-mobile pricing">
+                    <ul class="list">
+                      <li *ngFor="let priceRange of productPreference.priceRanges">
+                        <div class="toggle-box" 
+                          (click)="togglePricePreference(priceRange)" 
+                          [class.checked]="priceRange.selected"
+                          [class.unchecked]="!priceRange.selected"
+                        >
+                          <span>{{ priceRange.lowerLimit | currency: '$' }}</span> - <span>{{ priceRange.upperLimit | currency: '$' }}</span>
+                          <i class="fa fa-check-square-o"></i>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <!-- /priceRanges -->
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </ng-template>
+      </ngb-tab>
+
+      <ngb-tab title="Brands" id="tab-brands">
+        <ng-template ngbTabContent>
+
+          <p *ngIf="brandPrefsLoading">Fetching style preferences&hellip;</p>
+
+          <p>We use your brand preferences to get a better understanding of your personal likes and dislikes and to help determine the clothing that we show to you.</p>
+
+          <div class="buttons brands col3-mobile">
+            <ul class="antipref reset">
+              <li *ngFor="let brand of brandPreferences" class="span2">
+
+                <div class="toggle-box brand" 
+                  [class.checked]="brand.selected"
+                  [class.unchecked]="!brand.selected"
+                  (click)="toggleBrandPreference(brand)"
+                >
+                  <div class="photo" title="{{ brand.name }}">
+                      <img src="{{ brand.imageUrl }}" alt="{{ brand.name }}">
+                  </div>
+
+                  <i class="check-icon fa fa-check-square-o"></i>
+                  <i class="minus-icon fa fa-times"></i>
+                </div>
+
+              </li>
+            </ul>
+          </div>
+
+        </ng-template>
+      </ngb-tab>
+
+    </ngb-tabset>
+
+
+  </div>
+</div>

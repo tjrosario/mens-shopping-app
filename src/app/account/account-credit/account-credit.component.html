@@ -1,0 +1,59 @@
+<div class="account credit">
+  <div class="wrapper">
+
+    <h3>Gift Cards &amp; Coupons</h3>
+
+    <div class="row">
+      <div class="span8 col-a">
+        <h4>My Redeemable Coupons</h4>
+
+        <div *ngIf="redemptions">
+
+          <div *ngIf="redemptions.length === 0">
+            <p>You do not have any redeemable coupons.</p>
+          </div>
+
+          <div 
+            *ngFor="let redemption of redemptions" 
+            class="toggle-item"
+          >
+            <header class="row">
+              <div class="span3">
+                <span class="header">Redeem Date</span><br/>
+                {{ redemption.created_at._ | date: 'MM/dd/yyyy' }}
+              </div>
+              <div class="span3">
+                <span class="header">Total Redeemed</span><br/>
+                {{ redemption.total_discounted_in_cents._ | dollars }}
+              </div>
+              <div class="span3">
+                <span class="header">Status</span><br/>
+                {{ redemption.state }}
+              </div>
+            </header>
+
+
+            <div class="content">{{ redemption.coupon_code }}</div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="span4 col-b">
+        <div class="form-box">
+          <h4>Redeem a Coupon</h4>
+          <app-recurly-coupon-form
+            [onSubmit]="submitCoupon.bind(this)"
+            [isDisabled]="loading"
+          >
+          </app-recurly-coupon-form>
+        </div>
+
+        <!--
+        <img src="{{ assetUrl + '/assets/images/gift-cards/giftcard@2x.png' }}" class="photo"> -->
+      </div>
+    </div>
+    
+  </div>
+</div>

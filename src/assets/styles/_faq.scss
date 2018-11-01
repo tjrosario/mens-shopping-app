@@ -1,0 +1,54 @@
+.faq {
+  nav {
+    margin: 0 0 40px;
+
+    ul {
+      margin: 0;
+
+      @include media($tablet) {
+        padding-bottom: 0;
+      }
+
+      li {
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  .top {
+    font-size: $font-small;
+
+    span {
+      cursor: pointer;
+    }
+
+    .fa {
+      margin-left: 5px;
+    }
+  }
+
+  .form {
+    @include centered(400px);
+    background: $light-grey;
+    border-radius: 4px;
+    margin-bottom: $gutter;
+    padding: $gutter;
+
+    .button {
+      margin-bottom: 0;
+    }
+  }
+
+  .card-body {
+    h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    ol, ul {
+      margin-bottom: $gutter;
+    }
+  }
+}

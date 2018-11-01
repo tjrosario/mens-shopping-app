@@ -1,0 +1,109 @@
+.admin {
+  #sidenav {
+    @include media($tablet) {
+      display: none;
+    }
+  }
+
+  h1 {
+    padding-top: 0;
+
+    @include media($desktop) {
+      padding-top: 30px;
+      text-align: left;
+    }
+  }
+
+  .admin-nav {
+    ul {
+      @extend %reset;
+    }
+  }
+
+  .admin-account-nav {
+    @extend %reset;
+  }
+
+  .form {
+    margin: 0 0 $gutter;
+  }
+
+  .breadcrumbs {
+    @extend %reset;
+
+    @include media($tablet) {
+      margin: 0 0 $gutter;
+    }
+
+    li {
+      display: inline-block;
+      margin: 0 5px 0 0;
+
+      &:after {
+        color: $white-two;
+        content: '>';
+        font-size: 12px;
+        padding: 0 0 0 9px;
+        position: relative;
+        top: -1px;
+      }
+
+      &:last-child {
+        font-weight: 600;
+        margin-right: 0;
+
+        &:after {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .customers {
+    .view {
+      text-align: right !important;
+
+      @include media($mobile) {
+        padding-left: 8px !important;
+        width: 100% !important;
+      }
+    }
+  }
+
+  .addresses,
+  .payment-settings {
+    .toggle {
+      display: none;
+    }
+  }
+
+  .overview,
+  .order {
+    .button {
+      display: none;
+    }
+
+    .order-item {
+      .button-reject,
+      .button-return {
+        display: none;
+      }
+    }
+
+    .shipping-info {
+      .address-select {
+        a {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .overview {
+    p {
+      small {
+        display: none;
+      }
+    }
+  }
+}

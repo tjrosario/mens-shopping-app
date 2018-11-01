@@ -1,0 +1,112 @@
+<form 
+  [formGroup]="subscriptionForm" 
+  (ngSubmit)="onSubmit()" 
+  novalidate>
+
+  <div class="row">
+    <div class="field form-group">
+      <label>Budget</label>
+      <select 
+        class="form-control"
+        required 
+        name="budget"
+        formControlName="budget"
+        [(ngModel)]="data.budget"
+        >
+        <option value="">Select Budget</option>
+        <option 
+          *ngFor="let budget of budgets" 
+          [ngValue]="budget.value"
+        >
+          {{ budget.value | currency: '$' }} {{ budget.description }}
+        </option>
+      </select>
+    </div>
+
+    <div class="field form-group">
+      <label>Frequency</label>
+      <select 
+        class="form-control"
+        required 
+        name="frequency"
+        formControlName="frequency"
+        [(ngModel)]="data.frequency"
+        >
+        <option value="">Select Budget</option>
+        <option 
+          *ngFor="let frequency of frequencies" 
+          [ngValue]="frequency.value"
+        >
+          {{ frequency.name }} {{ frequency.description }}
+        </option>
+      </select>
+    </div>
+
+    <div class="row">
+      <div class="span5">
+        <div class="field form-group date">
+          <label>Start Date</label>
+
+          <ngb-datepicker 
+            #dp 
+            [(ngModel)]="startDate" 
+            formControlName="startDate"
+            name="startDate"
+            [startDate]="startDate"
+            [minDate]="minDate"
+          >
+          </ngb-datepicker>
+        </div>
+      </div>
+
+      <div class="span7">
+        <div class="field form-group">
+          <label>Notes</label>
+          <textarea 
+            type="text" 
+            class="form-control"
+            name="notes"
+            rows="5"
+            formControlName="notes"
+            [(ngModel)]="data.notes"
+            placeholder="eg - T-shirts in the summer, sweaters in the winter" 
+          ></textarea>
+        </div>
+
+        <!--
+        <div class="field form-group" *ngIf="mode === 'edit'">
+          <label>Status</label>
+          <select 
+            class="form-control"
+            required 
+            name="status"
+            formControlName="status"
+            [(ngModel)]="data.status"
+            >
+            <option value="">Select Status</option>
+            <option 
+              *ngFor="let status of statuses" 
+              [ngValue]="status.value"
+            >
+              {{ status.name }}
+            </option>
+          </select>
+        </div>-->
+      </div>
+    </div>
+
+  </div>
+
+  <input type="hidden" 
+    name="subscritionNumber"
+    formControlName="subscritionNumber"
+    [(ngModel)]="data.subscritionNumber"
+  >
+
+  <input type="hidden" 
+    name="current"
+    formControlName="current"
+    value="current"
+  >
+
+</form>

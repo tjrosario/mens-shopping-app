@@ -1,0 +1,9 @@
+<div class="social">
+  <div>
+    <ul>
+    	<li *ngFor="let social of socialMedia">
+    		<a target="_blank" href="{{ social.url }}" rel="external" title="{{ social.title }}" (click)="track(social)"><i class="{{ social.icon }}"></i><span>{{ social.title }}</span></a>
+    	</li>
+    </ul>
+  </div>
+</div>

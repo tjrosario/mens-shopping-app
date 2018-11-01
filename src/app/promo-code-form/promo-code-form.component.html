@@ -1,0 +1,24 @@
+<form class="form-simple"
+  [formGroup]="promoForm" 
+  (ngSubmit)="onSubmit(promoForm.value)" 
+  novalidate>
+  <div class="row">
+    <div class="field form-group col-a">
+      <input
+        type="text" 
+        class="form-control"
+        name="promoCode"
+        placeholder="Enter promo code"
+        formControlName="promoCode"
+      >
+    </div>
+    <div class="col-b">
+      <button class="button button-default"
+        [class.loading]="isDisabled"
+        [disabled]="!isFormValid() || isDisabled"
+      >
+        Apply
+      </button>
+    </div>
+  </div>
+</form>

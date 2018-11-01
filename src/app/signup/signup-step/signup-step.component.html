@@ -1,0 +1,49 @@
+<div class="step {{ section }}_step_{{ index }}" id="{{ section }}_step_{{ index }}">
+	<div class="step-content">
+		<div class="step-pref">
+			<h4>{{ text }}</h4>
+
+			<p *ngIf="description">{{ description }}</p>
+
+			<div class="buttons {{ buttonClass }}">
+				<app-checkbox-list
+					*ngIf="!submitBtnText"
+					[data]="data"
+					[limit]="limit"
+					[labelField]="'value'"
+					[type]="type"
+					(click)="selectHandler()"
+				>
+				</app-checkbox-list>
+
+				<app-checkbox-list
+					*ngIf="submitBtnText"
+					[data]="data"
+					[limit]="limit"
+					[labelField]="'value'"
+					[type]="type"
+				>
+				</app-checkbox-list>
+			</div>
+		</div>
+
+		<div  class="actions">
+
+			<button *ngIf="submitBtnText"
+				class="button button-dark button-small" 
+				[class.loading]="loadingHandler()"
+				(click)="selectHandler()" 
+				[disabled]="disabledHandler() || loadingHandler()"
+			>
+				{{ submitBtnText }}
+			</button>
+
+			<div *ngIf="tertiaryBtnText && skipHandler" class="skip">
+				<a (click)="skipHandler()">{{ tertiaryBtnText }}</a>
+			</div>
+		</div>
+
+
+		<div class="current">{{ section }} {{ pagingText }}</div>
+	</div>
+</div>

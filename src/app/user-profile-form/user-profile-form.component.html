@@ -1,0 +1,111 @@
+<form 
+  [formGroup]="profileForm" 
+  (ngSubmit)="onSubmit()" 
+  novalidate>
+
+  <div class="row">
+      <div class="field form-group span6">
+        <label>First Name</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          required
+          name="firstName"
+          formControlName="firstName"
+          [(ngModel)]="user.firstName"
+        >
+      </div>
+      <div class="field form-group span6">
+        <label>Last Name</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          required
+          name="lastName"
+          formControlName="lastName"
+          [(ngModel)]="user.lastName"
+        >
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field form-group span6">
+        <label>Height</label>
+        <select 
+          class="form-control" 
+          required
+          name="statedHeight"
+          formControlName="statedHeight"
+          [(ngModel)]="user.statedHeight"
+          >
+          <option *ngFor="let height of heights" [ngValue]="height.value">{{ height.value }}</option>
+        </select>
+      </div>
+
+      <div class="field form-group span6">
+        <label>Weight</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          required
+          name="statedWeight"
+          formControlName="statedWeight"
+          [(ngModel)]="user.statedWeight"
+        >
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field form-group span6">
+        <label>Phone</label>
+        <input 
+          type="tel" 
+          class="form-control" 
+          required
+          name="phone"
+          formControlName="phone"
+          [(ngModel)]="user.phone"
+            [textMask]="{ mask: masks.phone }"
+        >
+      </div>
+
+      <div class="field form-group span6">
+        <label>Email</label>
+        <input 
+          type="email" 
+          class="form-control" 
+          required
+          name="email"
+          formControlName="email"
+          [(ngModel)]="user.email"
+        >
+      </div>
+    </div>
+
+    <div class="row">
+        <div class="field form-group span6" *ngIf="resetPassword">
+            <p><a routerLink="/reset-password/{{user.id}}">Reset your password <i class="fa fa-caret-right"></i></a></p>
+        </div>
+        <div class="field form-group span6" *ngIf="!user.facebookId && fbLink">
+        <button 
+          class="button facebook-btn"
+          type="button"
+          (click)="facebookLogin()"
+          [disabled]="fbLoading || loading" 
+          [class.loading]="fbLoading">
+            <i class="fa fa-facebook"></i>
+            Link Facebook Account
+        </button>
+      </div>
+    </div>
+
+  <div class="submit align-center" style="margin-top:20px;">
+    <button 
+      type="submit" 
+      class="button button-large"
+      [class.loading]="loading"
+      [disabled]="!profileForm.valid || loading">
+      Save
+    </button>
+  </div> 
+</form>

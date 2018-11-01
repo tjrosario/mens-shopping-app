@@ -1,0 +1,17 @@
+<div class="toggle-button-list">
+
+  <ul 
+    [class.antipref]="type === 'antipref'">
+    <li *ngFor="let item of data['list']">
+
+      <app-toggle-btn
+        [label]="item[labelField]"
+        [data]="item"
+        [hasMedia]="hasMedia"
+        (click)="onSelect"
+      >
+      </app-toggle-btn>
+    </li>
+  </ul>
+
+</div>

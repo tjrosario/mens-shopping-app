@@ -1,0 +1,12 @@
+<nav>
+	<ul class="reset">
+		<li *ngFor="let navItem of items; let last = last;"
+			[class.last]="last"
+			[class.cta]="last">
+			
+			<a *ngIf="navItem.id !== 'myaccount'" routerLink="{{ navItem.link }}" [innerHTML]="navItem.name" (click)="track(navItem)"></a>
+			
+			<a *ngIf="navItem.id === 'myaccount'" [innerHTML]="navItem.name" (click)="clickHandler($event); track(navItem)"></a>
+		</li>
+	</ul>
+</nav>

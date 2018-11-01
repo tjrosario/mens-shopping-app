@@ -1,0 +1,138 @@
+<div class="account overview">
+  <div class="wrapper">
+    <h3>Account Overview</h3>
+
+    <div class="module pricing-boxes boxes" (click)="goToSubscriptions()">
+      <div class="box-list">
+        <div class="box-info box-content row">
+          <div class="span4 col-a">
+            <img src="{{ assetUrl + '/assets/images/pricing/box-fullkit.png' }}">
+          </div>
+          <div class="span8 col-b">
+            <h3><span>Ultimate convenience, zero commitment</span></h3>
+            <div class="price">Plans as low as $<span>99</span></div>
+            <div class="items">Our subscription plans are flexible and can be tailored to your desired frequency - monthly, bi-monthly, quarterly and more.</div>
+            
+            <div class="cta" >
+              <a class="button button-large">
+                Set up a subscription now
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <div class="row">
+        <div class="span6">
+          <a class="tab orders" routerLink="/account/orders">
+            <div class="span3 col-a">
+              <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+            </div>
+            <div class="span9 col-b">
+              <h4>My Orders</h4>
+              <p>View, track and manage orders</p>
+            </div>
+          </a>
+        </div>
+
+        <div class="span6">
+          <a class="tab orders" routerLink="/account/subscriptions">
+            <div class="span3 col-a">
+              <i class="fa fa-repeat" aria-hidden="true"></i>
+            </div>
+            <div class="span9 col-b">
+              <h4>Subscriptions</h4>
+              <p>Manage order frequency and budget</p>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="span6">
+          <a class="tab referrals" routerLink="/account/referrals">
+            <div class="span3 col-a">
+              <i class="fa fa-user-plus" aria-hidden="true"></i>
+            </div>
+
+            <div class="span9 col-b">
+              <h4>Referrals</h4>
+              <p>Refer friends to the ThreadLab referral program</p>
+            </div>
+          </a>
+        </div> 
+
+        <div class="span6">
+          <a class="tab credit" routerLink="/account/credit">
+            <div class="span3 col-a">
+              <i class="fa fa-gift" aria-hidden="true"></i>
+            </div>
+            <div class="span9 col-b">
+              <h4>Coupons</h4>
+              <p>Redeem coupons and gift cards</p>
+            </div>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="tabs tertiary row">
+      <div class="span3 col-a">
+        <a class="tab preferences" routerLink="/account/preferences">
+          <div class="span3 col-a">
+            <i class="fa fa-cogs" aria-hidden="true"></i>
+          </div>
+
+          <div class="span9 col-b">
+            <h4>Preferences</h4>
+            <p>Manage product and brand preferences</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="span3 col-a">
+        <a class="tab shipping" routerLink="/account/shipping">
+          <div class="span3 col-a">
+            <i class="fa fa-address-card" aria-hidden="true"></i>
+          </div>
+
+          <div class="span9 col-b">
+            <h4>My Addresses</h4>
+            <p>Manage shipping addresses for orders</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="span3 col-a">
+        <a class="tab billing" routerLink="/account/billing">
+          <div class="span3 col-a">
+            <i class="fa fa-credit-card" aria-hidden="true"></i>
+          </div>
+
+          <div class="span9 col-b">
+            <h4>Billing Info</h4>
+            <p>Manage billing information</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="span3 col-a">
+        <a class="tab billing" routerLink="/account/profile">
+          <div class="span3 col-a">
+            <i class="fa fa-user" aria-hidden="true"></i>
+          </div>
+
+          <div class="span9 col-b">
+            <h4>My Profile</h4>
+            <p>Manage personal information</p>
+          </div>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>

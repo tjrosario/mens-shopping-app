@@ -1,0 +1,23 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ mode }} Shipping Address</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+	<app-shipping-address-form 
+    [mode]="mode" 
+    [data]="address"
+  >    
+  </app-shipping-address-form>
+</div>
+<div class="modal-footer">
+  <button 
+  	type="submit"
+  	[disabled]="!shippingAddressForm.shippingForm.valid" 
+  	class="button button-orange" 
+  	(click)="activeModal.close(shippingAddressForm)"
+  >
+  	Save
+  </button>
+</div>

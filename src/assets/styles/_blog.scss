@@ -1,0 +1,42 @@
+.blog {
+  .posts {
+    @extend %reset;
+    @extend %clear;
+
+    .post {
+      border-bottom: 1px solid $white-two;
+      padding: 0 0 20px;
+
+      &:nth-child(2n+2) {
+        margin-right: 0;
+      }
+    }
+  }
+
+  .grid-sizer {
+    width: 50%;
+  }
+
+  .title {
+    @extend %headline-gamma;
+  }
+
+  .featured-image {
+    margin: 0 0 20px;
+  }
+
+  .alignleft {
+    float: left;
+    margin: .375em 1.75em 1.75em 0;
+  }
+
+  .alignright {
+    float: right;
+    margin: .375em 0 1.75em 1.75em;
+  }
+
+  .aligncenter {
+    clear: both;
+    margin: 0 auto 1.75em;
+  }
+}

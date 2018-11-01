@@ -1,0 +1,64 @@
+<div class="account orders">
+  <div class="wrapper">
+
+    <h3>My Orders</h3>
+
+    <div class="row">
+        <p *ngIf="loading">Fetching orders&hellip;</p>
+        <p *ngIf="orders.length === 0 && !loading">No orders found.</p>
+
+        <div *ngFor="let order of orders" class="customer-order toggle-item">
+          <header class="row">
+            <div class="span3">
+              <span class="header">Placed</span><br/>
+              {{ order.dateCreated | date: 'MM/dd/yyyy' }}
+            </div>
+            <div class="span3">
+              <span class="header">Status</span><br/>
+              {{ order.status | orderStatus }}
+            </div>
+            <div class="span3">
+              <span class="header">Order #</span><br/>
+              {{ order.orderNumber }}
+            </div>
+            <!--
+            <div class="span3 pricing">
+              <span class="header">Total</span>
+              <app-order-financials [data]="order"></app-order-financials>
+            </div>-->
+          </header>
+        
+          <div class="row">
+            <div class="span9">
+              <div class="content row">
+                <div *ngIf="order.box" class="span4">
+                  <img src="{{ assetUrl + order.box.imagePathAlt }}" alt="{{ order.box.description }}" class="photo" />
+                </div>
+                
+                <div class="span8">
+                  <div class="order-info">
+                    <div *ngIf="order.box">
+                      <h4>{{ order.box.title }} <small>({{ order.box.description }})</small></h4>
+                    </div>
+
+                    <p class="order-categories">
+                      <strong>Categories:</strong>
+                      <span *ngFor="let productNeed of order.productNeeds">{{ productNeed.productCategory.name }}</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="span3">
+              <div class="actions">
+                <a class="button edit" [routerLink]="['/account', 'orders', order.orderNumber]">View Order</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,288 @@
+<div class="account order">
+  <div class="wrapper">
+
+    <h3>Order Details</h3>
+
+    <p *ngIf="orderLoading">Fetching order&hellip;</p>
+    <p *ngIf="!order && !orderLoading">No orders found.</p>
+
+    <div *ngIf="order">
+      <div class="row details">
+        <div class="span3">
+          <p class="text-capitalize">
+            <strong>Order #:</strong> {{ order.orderNumber }}
+          </p>
+        </div>
+        <div class="span3">
+          <p class="text-capitalize">
+            <strong>Status:</strong> {{ order.status | orderStatus }}
+          </p>
+        </div>
+      </div>
+
+      <div *ngIf="order.status === 'finalized'">
+        <h4>Keep calm, we're working on your order</h4>
+        <p>You'll see an email from us shortly.</p>
+      </div>
+
+      <div class="row"
+        *ngIf="order.status !== 'received' && order.status !== 'processing' && order.status !== 'finalized'"
+      >
+        <div class="span8 column-a">
+          
+          <!-- order matches -->
+          <div *ngFor="let match of order.matches">
+
+            <div class="toggle-item"
+              [class.empty]="!match.orderItems.length"
+            >
+              <header>
+                <h3 class="category-title">{{ match.category }}</h3>
+              </header>
+
+              <div *ngIf="!match.orderItems.length">
+                <div class="content">
+                  <p>We're sorry, but we couldn't find any matching items within this category.</p>
+                </div>
+              </div>
+
+              <!-- order items -->
+              <div 
+                *ngFor="let orderItem of match.orderItems" 
+                class="order-item row"
+                [class.rejected]="orderItem.rejected"
+                [class.returned]="orderItem.returned || orderItem.markedForReturn"
+                [class.virtual]="orderItem.isVirtual"
+              >
+                <div class="main">
+                  <div class="content">
+                    <div class="row">
+                      <div class="span2 col-a">
+                        <div class="photo" (click)="viewProduct(orderItem)">
+                          <img src="{{ orderItem.product.imageUrl }}">
+                        </div>
+                      </div>
+
+                      <div class="span7 col-b">
+                        <h4>{{ orderItem.product.name }}</h4>
+                        <h5>Retail Price: {{ orderItem.product.retailPrice | currency: '$' }}</h5>
+
+                        <p class="product-specs">
+                          <strong>Brand:</strong> {{ orderItem.product.xBrand }}<br/>
+                          <strong>Size:</strong> {{ orderItem.product.statedSize }}<br/>
+                          <strong>Color:</strong> {{orderItem.product.statedColor }}<br/>
+                          <span class="description">{{ orderItem.product.description }}</span>
+                        </p>
+                      </div>
+
+                      <div class="span3 col-c">
+                        <div class="actions">
+                          <div *ngIf="order.status === 'preview'">
+                            <div 
+                              class="button" 
+                              (click)="rejectOrderItem(orderItem)"
+                              *ngIf="!orderItem.rejected"
+                            >
+                              Remove
+                            </div>
+                            <div 
+                              class="button" 
+                              (click)="undoRejectOrderItem(orderItem)"
+                              *ngIf="orderItem.rejected"
+                            >
+                              Undo Remove
+                            </div>
+                          </div>
+
+                          <div *ngIf="order.status === 'shipped'">
+                            <div 
+                              class="button" 
+                              (click)="returnOrderItem(orderItem)"
+                              *ngIf="!orderItem.returned && !orderItem.markedForReturn"
+                            >
+                              Return
+                            </div>
+                            <div 
+                              class="button" 
+                              (click)="undoReturnOrderItem(orderItem)"
+                              *ngIf="orderItem.returned || orderItem.markedForReturn"
+                            >
+                              Undo Return
+                            </div>
+                          </div>
+
+                          <div *ngIf="orderItem.isVirtual" class="extra align-center">
+                            <span (click)="showDropship()" class="link">Item ships separately</span>
+                          </div>
+
+
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <div *ngIf="orderItem.rejected" class="reasons align-center">
+                    <h5>Removed <span *ngIf="orderItem.rejectReasonsPretty">: {{ orderItem.rejectReasonsPretty }}</span></h5>
+                    
+                    <p *ngIf="orderItem.comments && orderItem.comments !== '' && orderItem.comments !== 'null'"><em>"{{ orderItem.comments }}"</em></p>
+                  </div>
+
+                  <div *ngIf="orderItem.returned || orderItem.markedForReturn" class="reasons align-center">
+                    <h5>Marked for Return <span *ngIf="orderItem.returnReasonsPretty">: {{ orderItem.returnReasonsPretty }}</span></h5>
+                    
+                    <p *ngIf="orderItem.comments && orderItem.comments !== '' && orderItem.comments !== 'null'"><em>"{{ orderItem.comments }}"</em></p>
+                  </div>
+
+                </div>
+
+              </div>
+              <!-- /order items -->
+
+            </div>
+          
+          </div>
+          <!-- /order matches -->
+
+          &nbsp;
+        </div>
+
+        <div class="span4 column-b">
+
+          <!-- preview notes -->
+          <div *ngIf="order.status === 'preview' && order.previewNotes" class="section">
+            <h4>Notes from Our Team</h4>
+            <p><em>{{ order.previewNotes }}</em></p>
+          </div>
+          <!-- /preview notes -->
+
+          <div *ngIf="order.status === 'accepted'" class="section">
+            <h4>Notes from Our Team</h4>
+            <p><em>If you are returning any items, please place them into the delivered box or included bag, and use the return label that came with your delivery.</em></p>
+            <p><em>Thank you, <br/>ThreadLab Customer Service</em></p>
+          </div>
+
+          <!-- shipping info -->
+          <div class="section"
+            *ngIf="order.status === 'preview' && addresses"
+          >
+            <h4>Shipping Address</h4>
+
+            <p *ngIf="addressesLoading">Fetching shipping addresses&hellip;</p>
+
+            <div class="row address-select" *ngIf="addresses.length > 0 && !addressesLoading">
+
+              <div class="">
+                <select 
+                  #address
+                  class="form-control" 
+                  name="address"
+                  [(ngModel)]="selectedAddress"
+                  (change)="selectAddress(selectedAddress)"
+                  >
+                  <option 
+                    *ngFor="let address of addresses" 
+                    [ngValue]="address.id">
+                    {{ address.addressLine1 }} {{ address.addressLine2 | deNull }} {{ address.city + ', ' + address.state + ' ' + address.zip }}
+                  </option>
+                  <option value="">Add New Address</option>
+                </select>
+              </div>
+
+              <!--
+              <div class="span2">
+                <div 
+                  (click)="editAddress(selectedAddressData)" 
+                  *ngIf="selectedAddressData.id" 
+                  class="edit-field link">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+                </div>
+              </div>-->
+
+            </div>
+
+            <div [hidden]="selectedAddress || addressesLoading">
+              <div class="row">
+                <app-shipping-address-form [data]="selectedAddressData"></app-shipping-address-form>
+              </div>
+            </div>
+
+          </div>
+          <!-- /shipping info -->
+
+          <!-- order summary -->
+          <div class="section">
+            <h4>Order Summary</h4>
+            <app-order-financials [data]="order"></app-order-financials>
+          </div>
+          <!-- /order summary -->
+
+
+          <!-- customer comments -->
+          <div class="section">
+            <div *ngIf="order.status ==='preview'">
+
+              <div class="link" 
+                [class.active]="showFeedback"
+                (click)="toggleFeedback()">
+                <small>
+                  <i class="fa fa-plus default"></i>
+                  <i class="fa fa-minus activate"></i>
+                  Add feedback
+                </small>
+              </div>
+
+              <div [hidden]="!showFeedback">
+                <p>Provide any additional detailed feedback about your order.</p>
+                <div class="field form-group">
+                  <textarea 
+                    class="form-control" 
+                    name="customerComments"
+                    [(ngModel)]="order.customerComments"
+                  ></textarea>
+                </div>
+              </div>
+
+            </div>
+
+            <div *ngIf="order.status !=='preview'">
+              <div *ngIf="order.customerCommens">
+                <p><em>{{ order.customerComments }}</em></p>
+              </div>
+            </div>
+          </div>
+          <!-- /customer comments -->
+
+          <div class="section actions">
+            <div *ngIf="order.status ==='preview'">
+              <button class="button button-large"
+                *ngIf="!allRejected"
+                [class.loading]="loading"
+                [disabled]="!orderFormValid() || acceptLoading"
+                (click)="acceptOrderPreview()"
+              >
+                Accept and Ship
+              </button>
+
+              <div *ngIf="numRejected > 0 && order.previewNumber < 4" class="alt">
+                <button class="button button-default button-small"
+                  (click)="rejectOrderPreview()"
+                  [class.loading]="loading"
+                  [disabled]="loading || acceptLoading"
+                >
+                  Send me another preview
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="cancel" *ngIf="order.status === 'preview'">
+        <small class="link" (click)="cancelOrder()">Cancel Order</small>
+      </div>
+    </div>
+
+  </div>
+</div>

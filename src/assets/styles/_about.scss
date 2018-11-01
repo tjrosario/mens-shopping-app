@@ -1,0 +1,98 @@
+.about {
+  .hero {
+    background-color: $white;
+    background-image: url('#{$asset-url}/lifestyle/boxes.jpg');
+    background-position: 800px -229px;
+
+    @include media($tablet) {
+      background-image: none;
+    }
+  }
+
+  ul {
+    @extend %reset;
+  }
+
+  h1 {
+    margin-bottom: $gutter;
+  }
+
+  h2 {
+    text-align: center;
+  }
+
+  .team {
+    display: inline;
+
+    li {
+      display: inline-block;
+      vertical-align: top;
+      width: 33%;
+
+      &.lead {
+        width: 50%;
+
+        @include media($tablet) {
+          width: 100%;
+        }
+      }
+
+      @include media($tablet) {
+        width: 100%;
+      }
+    }
+  }
+
+  .bio-entry {
+    padding: 0 $gutter $gutter * 2;
+    transition: all .1s ease-out;
+
+    .content {
+      padding: 0 40px;
+
+      @include media($tablet) {
+        padding: 0;
+      }
+    }
+
+    h4 {
+      color: $greyish-brown;
+      margin-bottom: 0;
+    }
+
+    h5 {
+      font-size: 16px;
+      margin: 0 0 10px;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .photo {
+      margin: 0 0 $gutter;
+
+      img {
+        border: 2px solid $white-two;
+        padding: 4px;
+      }
+    }
+
+    &:hover {
+      cursor: pointer;
+
+      .photo {
+        opacity: .85;
+      }
+    }
+  }
+}
+
+.modal-team {
+  img {
+    border: 1px solid $white-two;
+    max-height: 150px;
+    margin: 0 auto $gutter;
+    padding: 2px;
+  }
+}

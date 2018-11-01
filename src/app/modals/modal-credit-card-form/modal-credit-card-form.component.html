@@ -1,0 +1,21 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ mode }} Payment Method</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+	<p class="lead" *ngIf="mode === 'edit'"><i class="fa fa-cc-{{ card.logo }} credit-card-logo"></i> {{ card.brand }} ending in {{ card.last4 }}</p>
+
+	<app-credit-card-form [mode]="mode" [data]="card"></app-credit-card-form>
+</div>
+<div class="modal-footer">
+  <button 
+  	type="submit"
+  	[disabled]="!creditCardForm.isFormValid()" 
+  	class="button button-orange" 
+  	(click)="activeModal.close(creditCardForm)"
+  >
+  	Save
+  </button>
+</div>

@@ -1,0 +1,91 @@
+<div [class.navOpen]="isMenuOpen">
+  <header id="header"> 
+      <div class="wrapper">
+          <div class="clear">
+              <div class="span2">
+                  <div class="logo">
+                      <a routerLink="/home" id="index-header-logo00"><img src="{{ assetUrl + '/assets/images/logo/threadlab@2x.png' }}"></a>
+                  </div>
+              </div>
+
+              <div class="span10">
+                  <div class="navigation account-controls clear">
+                      <app-user-navigation 
+                        [items]="userNavItems"
+                        [clickHandler]="toggleAccountMenu.bind(this)">
+                      </app-user-navigation>
+
+                      <nav *ngIf="userAccountNavItems" 
+                        class="nav-account"
+                        [class.open]="isAccountMenuOpen"
+                      >
+                        <ul class="reset">
+                          <li *ngFor="let navItem of userAccountNavItems; let last = last;"
+                            [class.last]="last">
+                            <a routerLink="{{ navItem.link }}" [innerHTML]="navItem.name" (click)="trackAccountNav(navItem)"></a>
+                          </li>
+                          <li><a (click)="logout(); trackAccountNavLogout();">Sign Out <i class="fa fa-sign-out"></i></a></li>
+                        </ul>
+                      </nav>
+
+                  </div>
+              </div>
+          </div>
+
+          <i class="fa fa-bars" (click)="toggleMenu()"></i>
+      </div>
+  </header>
+
+  <div id="content">
+  	<router-outlet></router-outlet>
+  </div>
+
+  <app-global-footer *ngIf="footerActive" [sections]="footerNavSections"></app-global-footer>
+
+  <div 
+    class="fixed-navigation"
+    id="fixed-nav">
+
+    <div class="scroll-content">
+      <nav *ngIf="currentUser" 
+        [class.open]="isAccountMenuOpen"
+      >
+        <ul class="reset">
+          <li *ngFor="let navItem of userAccountNavItems; let last = last;"
+            [class.last]="last">
+            <a routerLink="{{ navItem.link }}" [innerHTML]="navItem.name" (click)="trackFixedNav(navItem)"></a>
+          </li>
+          <li><a (click)="logout(); trackFixedNavLogout();">Sign Out <i class="fa fa-sign-out"></i></a></li>
+        </ul>
+      </nav>
+
+      <div *ngIf="!currentUser">
+        
+        <app-navigation [sections]="fixedNavSections" [category]="headerCategory" [action]="mobileNavAction"></app-navigation>
+
+        <nav>
+          <ul class="reset">
+            <li><a routerLink="/login" (click)="trackFixedNavLogin();">Login <i class="fa fa-sign-in"></i></a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <app-get-started-cta [user]="currentUser"></app-get-started-cta>
+
+      <app-social-media></app-social-media>
+    </div>
+
+    <button 
+    	type="button" 
+    	class="close toggle" 
+    	aria-label="Close"
+    	(click)="toggleMenu()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+
+
+</div>
+
+<ng-progress [spinner]="false"></ng-progress>

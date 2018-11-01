@@ -1,0 +1,65 @@
+pipeline {
+    agent any
+
+    tools {
+        nodejs 'NodeJS 6.9.5'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                slackSend channel: '#ops-builds',
+                          color: '#D5D8DC',
+                          message: "The pipeline ${currentBuild.fullDisplayName} started."
+
+                echo 'Getting source code...'
+
+                checkout([$class: 'GitSCM', branches: [[name: '*/production']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'f2a74f52-3cfc-4ffa-b11c-2170c7d91184', url: 'https://github.com/MyThreadLab/threadlab-frontend']]])
+
+                script {
+                    def SERVER_DIR = "${env.WORKSPACE}/server"
+                    def OUTPUT_DIR = "/var/www/html/threadlab-frontend/"
+                    echo 'Copying server files...'
+                    sh "cp -r ${SERVER_DIR} ${OUTPUT_DIR}"
+                }
+            }
+        }
+
+        stage('Build: Dependencies') {
+            steps {
+                echo 'Building dependencies...'
+                withEnv(["NPM_CONFIG_LOGLEVEL=warn"]) {
+                    sh 'npm cache clean --force'
+                    sh 'npm i'
+                }
+            }
+        }
+
+        stage('Build: App') {
+            steps {
+                echo 'Building web app...'
+                sh 'npm run build:prod'
+            }
+        }
+
+        stage('Server: Restart') {
+            steps {
+                sh 'JENKINS_NODE_COOKIE=dontKillMe ./scripts/restart.sh'
+            }
+        }
+    }
+
+    post {
+        success {
+            slackSend channel: '#ops-builds',
+                      color: 'good',
+                      message: "The pipeline ${currentBuild.fullDisplayName} completed successfully."
+        }
+
+        failure {
+            slackSend channel: '#ops-builds',
+                      color: 'danger',
+                      message: "The pipeline ${currentBuild.fullDisplayName} failed."
+        }
+    }
+}

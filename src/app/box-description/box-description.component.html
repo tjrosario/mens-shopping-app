@@ -1,0 +1,19 @@
+<div class="box-extra">
+	<div *ngIf="data.slug === 'essentials'">
+		<p>A step up from the Starter Box, the <span ng-bind="data.title"></span> Box is designed to let you accessorize your order without sacrificing style.</p>
+
+		<p>When you place the order, you tell us up to 5 product categories you need, we'll select the best fitting items for you!</p>
+	</div>
+
+	<div *ngIf="data.slug === 'full-kit'">
+		<p>Our all-inclusive <span ng-bind="data.title"></span> Box is our biggest box yet! This box comes with everything you need to enjoy an updated wardrobe and has endless mixing and matching possibilities.</p>
+
+		<p>Tell us up to seven product categories you're looking for, we'll select the best items for you!</p>
+	</div>
+
+	<div *ngIf="data.slug === 'starter'">
+		<p>Expect up to 4 hand-picked items from a variety of quality brands just for you. </p>
+
+		<p>You tell us up to three product categories you need when you place the order, we'll select the items that will suit you best!</p>
+	</div>
+</div>

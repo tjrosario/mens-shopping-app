@@ -1,0 +1,114 @@
+<div class="account subscriptions">
+  <div class="wrapper">
+    <h3>Subscriptions</h3>
+
+    <div class="row">
+      <h4>Popular Plans</h4>
+      <app-box-selection 
+        [onSelection]="selectPlan.bind(this)"
+        [showHeadline]="false"
+        [showGetStarted]="false"
+        [btnText]="boxSelectorTxt"
+        [colClass]="boxColClass"
+      >  
+      </app-box-selection>
+      
+    </div>
+
+    <p class="align-right"><a (click)="addSubscription({ data: { budget: 14900, frequency_code: '1_months' }})"><i class="fa fa-plus"></i> Add Subscription</a></p>
+
+    <h4>My Subscriptions</h4>
+
+    <p *ngIf="loading">Fetching subscriptions&hellip;</p>
+    <p *ngIf="subscriptions.length === 0">You do not have any subscriptions.</p>
+
+    <div class="row">
+      <div class="col-a">
+        <div *ngIf="subscriptions">
+
+          <!--
+          <div *ngIf="billingInfo && subscriptions.length === 0">
+            <p>You do not have any subscriptions.</p>
+          </div>
+          -->
+
+          <div 
+            *ngFor="let subscription of subscriptions" 
+            class="toggle-item"
+            [class.notes]="subscription.customer_notes && !subscription.customer_notes.$"
+          >
+            <header class="row">
+              <div class="span3">
+                <span class="header">Start Date</span><br/>
+                {{ subscription.current_period_started_at._ | date: 'MM/dd/yyyy' }}
+              </div>
+              <div class="span3">
+                <span class="header">Budget</span><br/>
+                {{ subscription.unit_amount_in_cents._ | dollars }}
+              </div>
+              <div class="span3">
+                <span class="header">Status</span><br/>
+                {{ subscription.state }}
+              </div>
+            </header>
+
+            <div class="row">
+              
+              <div class="span9">
+                <div class="content">
+                  <div class="row">
+                    <div class="span4">
+                      <img src="{{ assetUrl + subscription.box.imagePathAlt }}">
+                    </div>
+                    <div class="span8">
+                      <h4>{{ subscription.plan.name }}</h4>
+                      <p>{{ subscription.plan_interval_display_string }}</p>
+
+                      <div *ngIf="subscription.customer_notes && !subscription.customer_notes.$" class="note">
+                        <h5>My Notes</h5>
+                        <em>{{ subscription.customer_notes }}</em>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="span3">
+                <div class="actions">
+                  <div *ngIf="subscription.state === 'active'">
+                    <div class="button edit" (click)="editSubscription(subscription)">Edit</div>
+                    <div class="button remove" (click)="removeSubscription(subscription)">Remove</div>
+                  </div>
+
+                  <div *ngIf="subscription.state === 'canceled'">
+                    <div class="button edit" (click)="reactivateSubscription(subscription)">Reactivate</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--
+        <div [hidden]="billingInfo">
+          <p>Subscriptions required a payment method on file.  After submitting your payment information you will be able to add a subscription.</p>
+
+          <div class="form-box wide">
+            <h4>Enter Billing Info</h4>
+            <app-recurly-form 
+              [data]="billingInfo" 
+              [onSubmit]="updatePaymentMethod.bind(this)"
+              [newCustomer]="true"
+              [loading]="loadingPayment"
+            >
+            </app-recurly-form>
+          </div>
+        </div>
+        -->
+
+      </div>
+
+    </div>
+
+  </div>
+</div>

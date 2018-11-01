@@ -1,0 +1,16 @@
+<div class="company-address">
+  <p>
+    <span itemprop="name hidden"><strong>{{ address.name }}</strong></span><br>
+    <span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+      <span itemprop="streetAddress">{{ address.address1 }}</span><br>
+      <span itemprop="streetAddress">{{ address.address2 }}</span><br>
+      <span itemprop="addressLocality">
+          <span>{{ address.city }}</span>, 
+          <span>{{ address.state }}</span>
+      </span>
+      <span itemprop="postalCode">{{ address.zip }}</span>
+    </span>
+    <br>
+    <a href="tel:+1-{{ address.phone }}" itemprop="telephone" class="phone"><i class="fa fa-phone"></i> <span>{{ address.phone }}</span></a>
+  </p>
+</div>

@@ -1,0 +1,58 @@
+.examples {
+  #content {
+    .angular-grid {
+      p {
+        margin: 0;
+      }
+    }
+
+    li {
+      background: $light-grey;
+      border-bottom: 2px solid $white;
+      margin: 0;
+
+      @include media($tablet) {
+        padding: $gutter;
+        text-align: center;
+      }
+
+      &:last-child {
+        border: 0;
+      }
+    }
+
+    .col-a {
+      padding: 50px $gutter;
+
+      @include media($desktop) {
+        border-right: 2px solid $white;
+      }
+
+      @include media($tablet) {
+        border: 0;
+        padding: 0;
+        margin: 0 0 $gutter;
+      }
+    }
+
+    .col-b {
+      padding: 100px;
+
+      @include media($tablet) {
+        padding: 0;
+      }
+
+      h2 {
+        margin-bottom: 10px;
+      }
+
+      p {
+        font-size: 27px;
+
+        @include media($tablet) {
+          font-size: 18px;
+        }
+      }
+    }
+  }
+}

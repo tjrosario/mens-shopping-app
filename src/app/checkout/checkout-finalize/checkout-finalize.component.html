@@ -1,0 +1,217 @@
+<div class="checkout">
+
+  <div class="wrapper">
+    <h2 class="align-center">Place Your Order</h2>
+
+    <!-- shipping -->
+    <div class="section shipping" *ngIf="addresses">
+      <h3>Shipping Address</h3>
+
+      <div class="section-wrapper">
+
+        <p *ngIf="addressesLoading">Fetching shipping addresses&hellip;</p>
+
+        <div class="row address-select" *ngIf="addresses.length > 0 && !addressesLoading">
+
+          <div class="row" *ngIf="selectedAddressData && !changingShippingAddress">
+            <div class="span6">
+              <p>
+                {{ selectedAddressData.addresseeFirstName }} {{ selectedAddressData.addresseeLastName }}<br/>
+                {{ selectedAddressData.addressLine1 }} 
+                {{ selectedAddressData.addressLine2 }}<br/>
+                {{ selectedAddressData.city }}, {{ selectedAddressData.state }} {{ selectedAddressData.zip }}
+              </p>
+            </div>
+            <div class="span6 align-right">
+              <button class="button button-default button-small" (click)="updateShippingInfo()">Change</button>
+            </div>
+          </div>
+
+        </div>
+
+        <div *ngIf="changingShippingAddress">
+          <h4>Your Addresses</h4>
+          <div class="option-group">
+            <div 
+              *ngFor="let address of addresses" 
+              class="option row"
+              [class.selected]="address.id === selectedAddressData.id"
+              (click)="selectShippingAddress(address)"
+            >
+              <div class="span1 text-center">
+                <i class="fa fa-check-circle success"></i>
+                <i class="fa fa-circle"></i>
+              </div>
+              <div class="span9">
+                <p>
+                  <strong>{{ address.addresseeFirstName }} {{ address.addresseeLastName }}</strong>
+                  {{ address.addressLine1 }}  
+                  {{ address.addressLine2 }} 
+                  {{ address.city }}, {{ address.state }} {{ address.zip }}
+                </p>
+              </div>
+              <div class="span2 text-right">
+                <button class="button button-default button-small">Select</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <p>
+              <a (click)="addShippingAddress()" class="toggle-icon-left">
+                <i class="fa fa-plus"></i>Add Address
+              </a>
+            </p>
+          </div>
+        </div>
+
+        <div *ngIf="addresses.length === 0">
+          <p>
+            <a (click)="addShippingAddress()" class="toggle-icon-left">
+              <i class="fa fa-plus"></i>Add Address
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- /shipping -->
+
+
+    <!-- billing -->
+    <div class="section billing" *ngIf="cards" [hidden]="!requiresPayment">
+      <h3>Payment Method</h3>
+
+      <div class="section-wrapper">
+        <p *ngIf="billingInfoLoading">Fetching billing info&hellip;</p>
+
+        <div *ngIf="(billingInfo && billingInfo.account) && !changingBillingInfo" class="billing-info">
+          <div class="row">
+            <div class="span6">
+              <div class="row">
+                <div class="span3">
+                  <i class="fa fa-cc-{{ selectedCreditCardBrand.id }} credit-card-logo"></i>
+                </div>
+                <div class="span9">
+                  <p>
+                    {{ billingInfo.card_type }} ending in {{ billingInfo.last_four }} 
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="span6 align-right">
+              <button class="button button-default button-small" (click)="updateBillingInfo()">Change</button>
+            </div>
+          </div>
+        </div>
+
+        <div [hidden]="billingInfo !== null && !changingBillingInfo">
+          <app-recurly-form 
+            [data]="billingInfo" 
+            [onSubmit]="updatePaymentMethod.bind(this)"
+            [onCancel]="cancelUpdatePaymentMethod.bind(this)"
+            [loading]="loadingPayment"
+          >
+          </app-recurly-form>
+        </div>
+      </div>
+    </div>
+    <!-- /billing -->
+
+    <!-- review -->
+    <div class="section review">
+      <h3>Review Your Order</h3>
+
+      <div class="order-items">
+        <div class="row">
+          <div class="span3">
+            <div *ngIf="selectedBox" class="photo">
+              <img src="{{ assetUrl + selectedBox.imagePathAlt }}" alt="{{ selectedBox.title }}" />
+            </div>
+          </div>
+          <div class="span4">
+            <div *ngIf="selectedBox">
+              <h4>{{ selectedBox.title }} <small>({{ selectedBox.description }})</small></h4>
+              <p class="order-categories">
+                <strong>Categories:</strong>
+                <span *ngFor="let productNeed of productNeeds">{{ productNeed.productCategory.name }}</span>
+              </p>
+            </div>
+
+            <app-order-financials *ngIf="order" [data]="order"></app-order-financials>
+          </div>
+          <div class="span5">
+            <div class="disclaimer">
+
+              <app-promo-code-form 
+                *ngIf="order" 
+                [onSubmit]="submitPromoCode.bind(this)"
+                [isDisabled]="promoCodeLoading"
+              >
+              </app-promo-code-form>
+
+              <p><small>Order with confidence, every ThreadLab order comes with 365 Day Returns and Free Two Way Shipping.</small></p>
+
+              <div class="field form-group">
+                <select
+                  class="form-control"
+                  name="subscriptionPlan"
+                  [(ngModel)]="subscriptionPlan"
+                >
+                  <option [ngValue]="null" selected>Select Subscription</option>
+                  <option 
+                    *ngFor="let plan of availablePlans" 
+                    [ngValue]="plan"
+                  >
+                    {{ plan.name }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="link" 
+                [class.active]="showSpecialInstructions"
+                (click)="toggleSpecialInstructions()">
+                <small>
+                  <i class="fa fa-plus default"></i>
+                  <i class="fa fa-minus activate"></i>
+                  Add special instructions
+                </small>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="showSpecialInstructions" class="instructions row">
+          <div class="span7">
+            <p><small>To help us pick the best items for your order, let us know if you're looking for clothes for the office, the weekend or a specific event as well as any specific Brand, Size and Fit.</small></p>
+
+            <div class="field form-group flat">
+              <label>Special Instructions</label>
+              <textarea
+                type="text" 
+                class="form-control" 
+                name="specialInsructions"
+                [(ngModel)]="order.specialInstructions"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="actions">
+        <button class="button button-large"
+          [class.loading]="loading"
+          [disabled]="!checkoutFormValid() || loading"
+          (click)="confirmOrder()"
+
+        >
+          Place Order
+        </button>
+      </div>
+    </div>
+    <!-- /review -->
+
+  </div>
+
+</div>

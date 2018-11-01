@@ -1,0 +1,40 @@
+<form 
+  [formGroup]="orderItemReturnForm" 
+  (ngSubmit)="onSubmit()" 
+  novalidate>
+
+  
+
+  <div class="row">
+    <div class="field form-group">
+      <label>Reason for return</label>
+      <select 
+        class="form-control"
+        name="returnReasons"
+        formControlName="returnReasons"
+        [(ngModel)]="data.returnReasons[0]"
+        required
+        >
+        <option value="">Select a Reason</option>
+        <option 
+          *ngFor="let reason of returnReasons" 
+          [ngValue]="reason.value"
+        >
+          {{ reason.text }}
+        </option>
+      </select>
+    </div>
+
+    <div class="field form-group">
+      <label>Comments</label>
+      <textarea 
+        class="form-control" 
+        name="comments"
+        formControlName="comments"
+        [(ngModel)]="data.comments"
+      ></textarea>
+    </div>
+
+  </div>
+
+</form>

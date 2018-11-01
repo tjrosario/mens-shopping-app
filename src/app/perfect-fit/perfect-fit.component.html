@@ -1,0 +1,27 @@
+<div class="perfect-fit-public">
+  <h1>PerfectFit<sup>&trade;</sup></h1>
+  <div class="wrapper align-center">
+    
+    <div *ngIf="!currentUser">
+      <p>PerfectFit<sup>&trade;</sup> is a fitting system that allows us to send you perfectly-fitting clothing by matching our products to items that you already own and love.  You can add pre-measured items that you bought from us, or you can measure your own. Follow the step-by-step measurement guide to learn how.  <a ui-sref="index.signup">Create an account</a> or <a ui-sref="index.login({ nextState: 'perfect-fit' })">Sign In</a> to access your PerfectFit<sup>&trade;</sup> section of Your Account.</p>
+    </div>
+
+    <div *ngIf="currentUser">
+      <p>PerfectFit<sup>&trade;</sup> is a fitting system that allows us to send you perfectly-fitting clothing by matching our products to items that you already own and love.</p>
+    </div>
+
+    <div class="row">
+      <div class="span6">
+        <h3>Add a pre-measured item</h3>
+        <img src="{{ assetUrl + '/assets/images/examples/perfect-fit1.png' }}">
+      </div>
+      <div class="span6">
+        <h3>Add your own measurements</h3>
+        <img src="{{ assetUrl + '/assets/images/examples/perfect-fit2.png' }}">
+      </div>
+    </div>
+
+    <app-get-started-cta [user]="currentUser"></app-get-started-cta>
+  </div>
+
+</div>

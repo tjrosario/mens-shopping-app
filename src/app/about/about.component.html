@@ -1,0 +1,64 @@
+<div class="about">
+  
+  <div class="hero">
+      <div class="masking">
+          <div class="wrapper clear">
+              <div class="span6">
+                  <h1>About Us</h1>
+                  <p>Making day to day life easier for men</p>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <div class="wrapper">
+    <div class="row-separator">
+      <div class="content">
+        <h2>Our Purpose</h2>
+        <p>ThreadLab is creating the most convenient and customer-friendly clothing service available to man. Clothing should fit the first time you try it on. Finding new clothing that makes you look and feel great should be easy.  We are using technology to solve these problems and make your life easier.</p>
+      </div>
+    </div>
+
+    <div class="row-separator">
+      <div class="content">
+        <h2>Our Story</h2>
+        <p>
+          Early in 2008, while getting his MBA at NYU Stern, Will wrote the business plan for ThreadLab and pitched the concept to a few professors.
+        </p>
+
+        <p>
+          In 2011, we watched the subscription shopping and online personal shopping markets evolve with companies like ShoeDazzle, BirchBox, and Trunk Club gaining significant traction.
+        </p>
+        <p>
+          In 2012, we began testing the existing online and in-store personal shopping services and saw there still was no <em> affordable, low-touch shopping solution.</em>
+        </p>
+
+
+        <p>
+          To reinvent men’s clothing shopping, in 2013, we built <em>a team that didn’t come from retail—a team that was not founded in the fashion world—a team with a clean perspective.</em>
+        </p>
+
+        <p>
+          We studied the tedious process of shopping, broke it down, and are making it <em>more efficient and more effective</em>.
+        </p>
+        <p>
+          <strong>ThreadLab is the innovative, affordable, and convenient way to get timeless menswear classics.</strong>
+        </p>
+      </div>
+    </div>
+
+    <div class="row-separator">
+      <div class="content">
+        <h2>The Team</h2>
+        <div class="align-center">
+          <ul class="reset clear team">
+            <li *ngFor="let teamMember of team"
+              [class.lead]="teamMember.lead"
+            >
+              <app-team-member [member]="teamMember"></app-team-member>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+</div>

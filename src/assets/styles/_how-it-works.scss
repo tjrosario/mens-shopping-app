@@ -1,0 +1,16 @@
+.how-it-works {
+  .hero {
+    background-image: url('#{$asset-url}/brandingPhotos/starter-box-allgray.png');
+    background-position: right -92px;
+
+    @include media($tablet) {
+      background-image: none;
+    }
+  }
+
+  .steps {
+  	h2 {
+  		display: none;
+  	}
+  }
+}

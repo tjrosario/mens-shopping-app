@@ -1,0 +1,17 @@
+<div class="brand-prefs">
+    <h1>Brand Preferences</h1>
+    <div class="wrapper align-center">
+        <div *ngIf="!currentUser">
+            <p>Helping our customers discover new brands that fit their style, budget and body type is our mission. Use the Brand Preferences section of Your Account to control the brands you receive.  <a ui-sref="index.signup">Click here</a> to Get Started or <a ui-sref="index.login({ nextState: 'myaccount.brand-preferences' })">Sign In</a> to your account to update your Brand Preferences.</p>
+        </div>
+
+        <div *ngIf="currentUser">
+            <p>Helping our customers discover new brands that fit their style, budget and body type is our mission. Use the Brand Preferences section of Your Account to control the brands you receive.  <a ui-sref="index.account.brandPreferences">Update your Brand Preferences now <i class="fa fa-caret-right" aria-hidden="true"></i></a></p>
+        </div>
+
+        <img src="{{ assetUrl + '/assets/images/examples/brand-prefs.png' }}" />
+
+        <app-get-started-cta [user]="currentUser"></app-get-started-cta>
+    </div>
+</div>
+ 

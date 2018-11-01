@@ -1,0 +1,907 @@
+.my-account {
+  h1 {
+    padding: 0;
+    
+    @include media($desktop) {
+      font-size: 48px;
+      text-align: left;
+    }
+  }
+
+  .row-separator {
+    @extend %row-separator-fullbleed;
+
+    &:first-child {
+      .content {
+        padding-top: 0;
+      }
+    }
+  }
+
+  .add-address-form {
+    .default {
+      @include media($desktop) {
+        margin-top: 42px;
+      }
+    }
+  }
+
+  #sidenav {
+    @include media($tablet) {
+      display: none;
+    }
+  }
+
+  .overview {
+    p {
+      margin-bottom: 0;
+    }
+
+    .note {
+      margin-top: $gutter;
+    }
+  }
+
+  .brands {
+    .buttons {
+      li {
+        @include media($desktop) {
+          @include span-columns(3);
+
+          &:nth-child(4n+4) {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+  }
+  
+  .order-accepted,
+  .order-completed {
+    .photo {
+      margin: 0 0 $gutter;
+
+      img {
+        margin: 0 auto;
+        
+        @include media($desktop) {
+          max-width: 300px;
+        }
+      }
+    }
+
+    .module {
+      .button {
+        display: inline-block;
+      }
+    }
+  }
+
+  .subscriptions {
+    .info-steps {
+      margin: 0 0 $gutter;
+    }
+
+    .field {
+      &.box {
+        margin-top: -23px;
+
+        img {
+          @include media($tablet) {
+            margin: $gutter auto;
+            max-width: 200px;
+          }
+        }
+      }
+    }
+
+    .subscription-list {
+      margin: 0 0 $gutter * 2;
+
+      .form {
+        border: 0;
+        margin: 0;
+        padding: 20px 0 0;
+
+        p {
+          margin: 0 0 5px;
+        }
+      }
+
+      .subscription {
+        background: $light-grey;
+        border: 1px solid $white-two;
+        border-radius: 4px;
+        margin: 0 0 $gutter;
+        padding: $gutter;
+
+        &.inactive {
+          background: $white-two;
+        }
+
+        .status {
+          @extend %neuton;
+          font-size: 14px;
+        }
+
+        h3 {
+          margin: 0;
+        }
+
+        p {
+          margin: $gutter 0 0;
+        }
+
+        .col-a {
+          @include media($tablet) {
+            float: left;
+          }
+        }
+
+        .actions {
+          text-align: right;
+
+          @include media($tablet) {
+            float: right;
+            margin: 3px 0 0;
+          }
+
+          a {
+            color: $black;
+            margin: 0 0 0 10px;
+
+            &:hover {
+              ;
+
+              span {
+                text-decoration: underline;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .slide {
+      max-height: 0;
+      overflow-y: hidden;
+      transition: all .3s ease-out;
+
+      &.slide-down {
+        max-height: 1000px;
+      } 
+    }
+
+    .add-form {
+      margin-top: $gutter;
+    }
+
+    .edit-form {
+      .field {
+        &.box {
+          margin-top: 0;
+        }
+      }
+    }
+
+    .form {
+      //background: $white-two;
+      //border: 1px solid $white-two;
+      border-bottom: 1px solid $white-two;
+      //border-radius: 4px;
+      margin: 0 0 $gutter;
+      //padding: $gutter;
+      padding: 0 0 $gutter;
+
+      .submit {
+        .button {
+          &.button-submit {
+            margin: 0 $gutter 0 0;
+
+            @include media($tablet) {
+              margin: 0 0 $gutter;
+            }
+          }
+
+          &:last-child {
+            @include media($tablet) {
+              margin-bottom: 0;
+            }
+          }
+        }
+      }
+
+      p {
+        margin: 0 0 5px;
+      }
+
+      &.add-card-form {
+        p {
+          margin-bottom: $gutter;
+        }
+      }
+
+      .notes {
+        label {
+          margin: 0 0 5px;
+        }
+
+        select {
+          width: auto;
+        }
+      }
+
+      .start-date {
+        .field {
+          label {
+            @extend %neuton;
+            margin: 0;
+            text-transform: none;
+          }
+        }
+
+        .custom-date {
+          .field {
+            margin: -12px 0 0;
+            padding: 0;
+            position: relative;
+            top: 6px;
+
+            @include media($tablet) {
+              margin: 5px 0 0;
+              top: 0;
+            }
+
+            input {
+              margin: 0;
+            }
+          }
+        }
+      }
+
+      .categories {
+        text-align: left;
+
+        .toggle-button-list {
+          margin: 0;
+        }
+
+        .toggle-box {
+          height: 94px;
+          overflow: hidden;
+          width: 94px;
+
+          .title {
+            background: rgba($white, .85);
+            bottom: -50px;
+            color: $black;
+            left: 0;
+            opacity: 0;
+            padding: 2px;
+            position: absolute;
+            transition: all .2s ease-out;
+            width: 100%;
+          }
+
+          &:hover,
+          &.checked {
+            .title {
+              bottom: 0;
+              opacity: 1;
+            }
+          }
+
+          .fa {
+            bottom: auto;
+            top: 2px;
+          }
+        }
+      }
+    }
+  }
+
+  .order-details {
+    .order-info {
+      margin: 0 0 $gutter;
+    }
+
+    .note {
+      border-bottom: 1px solid $white-two;
+      margin: $gutter 0 0;
+      padding: 0 0 $gutter;
+
+      p {
+        font-size: 15px;
+
+        @include media($tablet) {
+          font-size: 14px;
+        }
+      }
+    }
+
+    .info-steps {
+      .step3 {
+        margin-top: -52px;
+
+        @include media($tablet) {
+          margin-top: 0;
+        }
+      }
+    }
+  }
+
+  .info-steps {
+    margin: $gutter 0 0;
+
+    ol {
+      @extend %clear;
+      @extend %reset;
+    }
+
+    li {
+      font-size: 13px;
+
+      .step {
+        background: $white-two;
+        border: 1px solid $white-two;
+        border-radius: 4px;
+        margin: 0;
+        padding: 10px;
+        text-align: center;
+
+        @include media($tablet) {
+          background: none;
+          border: 0;
+          padding: 0;
+          text-align: left;
+        }
+      }
+
+      .fa {
+        display: block;
+        font-size: 24px;
+        margin: 0 0 10px;
+
+        @include media($tablet) {
+          display: inline-block;
+          font-size: 16px;
+          margin: 0 5px 0 0;
+        }
+
+        &.fa-arrow-right {
+          font-size: 20px;
+          margin: 45px 0 0;
+
+          @include media($tablet) {
+            display: none;
+          }
+        }
+
+        &.fa-arrow-down {
+          display: none;
+
+          @include media($tablet) {
+            display: block;
+          }
+        }
+      }
+
+      .or {
+        @extend %neuton-bold;
+        color: $white-two;
+        margin: 10px 0;
+        text-align: center;
+        text-transform: uppercase;
+
+        @include media($tablet) {
+          font-size: 11px;
+          margin: 4px 0;
+        }
+      }
+
+      &.span1 {
+        text-align: center;
+
+        @include media($tablet) {
+          display: none;
+        }
+      }
+
+      .preview {
+        position: relative;
+        text-align: center;
+
+        @include media($tablet) {
+          display: inline-block;
+          text-align: left;
+        }
+
+        .fa {
+          display: inline-block;
+
+          &.fa-file {
+            color: $white-two;
+          }
+
+          &.fa-search {
+            font-size: 18px;
+            margin: 0 0 0 -20px;
+            position: relative;
+            top: 8px;
+
+            @include media($tablet) {
+              font-size: 13px;
+              left: 7px;
+              margin: 0;
+              position: absolute;
+              top: 9px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .order {
+    .control {
+      @extend %clear;
+      margin: $gutter 0 0;
+
+      .col-a {
+        .button {
+          float: left;
+
+          @include media($tablet) {
+            float: none;
+          }
+        }
+      }
+    }
+
+    .note {
+      margin: 0;
+    }
+
+    .order-pricing {
+      text-align: left;
+    }
+
+    .add-address-form {
+      //.addressee-firstname,
+      //.addressee-lastname,
+      .addressee-email,
+      .field.type {
+        display: none;
+      }
+
+      .default {
+        margin-top: 0;
+      }
+    }
+
+    .shipping-info {
+      select {
+        display: inline;
+        margin: 0 10px 0 0;
+        width: auto;
+
+        @include media($tablet) {
+          margin-bottom: 10px;
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .order-history {
+    h5 {
+      font-size: 16px;
+      margin: 0;
+    }
+
+    .order {
+      .toggle {
+        display: block;
+      }
+    }
+
+    .success,
+    .alert {
+      margin: 0 0 20px;
+    }
+
+    .row {
+      &.lead {
+        border-bottom: 1px solid $white-two;
+        margin: 0 0 10px;
+        padding: 0 0 10px;
+      }
+    }
+
+    .view {
+      text-align: right !important;
+
+      @include media($mobile) {
+        padding-left: 8px !important;
+        width: 100% !important;
+      }
+    }
+  }
+
+  .tabs {
+    .tab {
+      color: $white;
+    }
+  }
+
+  .main {
+    margin: 0 0 40px;
+  }
+
+  .perfect-fit,
+  .product-preferences {
+    
+    .nav-pills {
+      @include span-columns(3);
+      background: $white-two;
+      border-radius: 5px;
+      margin-left: 0;
+      margin-top: 0;
+      padding: 10px 0;
+
+      > li {
+        float: none;
+        font-size: 14px;
+        white-space: break-word;
+
+        &.active {
+          @extend %neuton-bold;
+        }
+      }
+    }
+
+    .tab-content {
+      @include span-columns(9 of 12 last);
+
+      > .tab-pane {
+        padding: 0 $gutter;
+      }
+    }
+
+
+    .buttons {
+      text-align: left;
+
+      @include media($tablet) {
+        text-align: center;
+      }
+    }
+
+    .toggle-box {
+      color: $white;
+    }
+
+    .unit {
+      span { margin: 0; }
+    }
+
+    .dimension {
+      .fa-question-circle {
+        color: $squash;
+        margin-left: 5px;
+      }
+    }
+
+    .selection {
+      margin: 0 0 20px;
+      text-align: right;
+
+      @include media($tablet) {
+        text-align: left;
+      }
+
+      label {
+        display: inline-block;
+        margin: 0 10px 0 0;
+
+        @include media($tablet) {
+          display: block;
+          margin: 0 0 10px;
+        }
+      }
+
+      select {
+        display: inline-block;
+        width: auto;
+
+        @include media($tablet) {
+          display: block;
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .payment-settings,
+  .addresses {
+    .main {
+      margin-bottom: 40px;
+
+      h3 {;
+        margin: 0;
+      }
+
+      .row {
+        border-bottom: 1px solid $white-two;
+        padding: 20px 0;
+
+        p {
+          margin: 0;
+        }
+      }
+
+      .toggle {
+        text-align: right;
+
+        span {
+          margin: 0 5px 0 6px;
+        }
+      }
+
+      .default {
+        color: $squash;
+        text-transform: uppercase;
+      }
+    }
+
+    .type {
+      select {
+        text-transform: capitalize;
+      }
+    }
+
+    form {
+      margin: 40px 0;
+    }
+
+    .funding {
+      text-transform: capitalize;
+    }
+  }
+
+  .gift-cards {
+    .credits {
+      border-bottom: 1px solid $white-two;
+      margin: 0 0 20px;
+      padding: 0 0 20px;
+
+      p {
+        margin: 0;
+      }
+    }
+
+    form {
+      text-align: center;
+    }
+
+    .field {
+      text-align: center;
+
+      input {
+        display: inline-block;
+        margin-right: 15px;
+      }
+    }
+
+    .code {
+      width: 290px;
+    }
+
+    .photo {
+      margin: 0 auto 20px;
+      max-width: 250px;
+    }
+  }
+
+  .perfect-fit {
+    h1 {
+      text-transform: none;
+    }
+
+    .tab {
+      border-bottom: 1px solid $white-two;
+      margin: 0 0 $gutter;
+      padding: 0 0 $gutter;
+
+      &:last-of-type {
+        border: 0;
+      }
+
+      .view {
+        margin: 0 0 40px;
+
+        .fa {
+          margin-left: 5px;
+        }
+      }
+
+      p {
+        &.indent {
+          margin: 0;
+        }
+      }
+    }
+
+    .instructions {
+      display: none;
+    }
+
+    .reference-items {
+      margin: 0 0 $gutter;
+      
+      .ref-item {
+        @extend %indent;
+      }
+
+      .col-a {
+        .title {
+          margin: 0;
+          text-transform: none;
+        }
+      }
+
+      .actions {
+        text-align: right;
+
+        @include media($tablet) {
+          margin: 5px 0 0;
+          text-align: left;
+        }
+
+        a {
+          color: $black;
+          margin: 0 0 0 10px;
+
+          @include media($tablet) {
+            margin: 0 10px 0 0;
+          }
+
+          &:hover {
+            ;
+
+            span {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+
+    .form {
+      background: $white-two;
+      border: 1px solid $white-two;
+      border-radius: 4px;
+      margin: 0 0 $gutter;
+      padding: $gutter;
+
+      .submit {
+        .button {
+          &.button-submit {
+            margin: 0 $gutter 0 0;
+
+            @include media($tablet) {
+              margin: 0 0 $gutter;
+            }
+          }
+        }
+      }
+    }
+
+    .add-form {
+      .form {
+        margin-top: $gutter;
+      }
+    }
+
+    .edit-form {
+      .form {
+        margin-top: $gutter;
+      }
+    }
+
+    .guide {
+      margin: 0 0 $gutter;
+      
+      p {
+        margin: 0;
+      }
+
+      .view {
+        margin: 0;
+        text-align: right;
+      }
+    }
+
+    .form-at-home {
+      .list {
+        li {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    .slide {
+      max-height: 0;
+      overflow-y: hidden;
+      transition: all .3s ease-out;
+
+      &.slide-down {
+        max-height: 1000px;
+      } 
+    }
+  }
+}
+
+.reset-pw {
+  form {
+    @include centered(400px);
+  }
+
+  .msg {
+    margin-top: $gutter;
+  }
+}
+
+.login {
+  .form {
+    @include centered(400px);
+  }
+
+  .row-separator:first-child {
+    .content {
+      padding-top: 0;
+    }
+  }
+
+  .or {
+    margin: $gutter 0;
+  }
+
+  .col-a {
+    padding: 40px 0 0;
+    text-align: center;
+
+    h2 {
+      @include media($desktop) {
+        margin: 0;
+      }
+    }
+  }
+
+  .col-b {
+    border-top: 1px solid $white-two;
+    padding-top: 30px;
+    text-align: center;
+
+    @include media($desktop) {
+      border-left: 1px solid $white-two;
+      border-top: 0;
+      min-height: 475px;
+      padding: 140px 0 0;
+    }
+  }
+}
+
+.account-confirm {
+  @include media($tablet) {
+    text-align: center;
+  }
+
+  .col-a {
+    padding: 30px 0 0;
+
+    @include media($tablet) {
+      padding-top: 0;
+    }
+  }
+}

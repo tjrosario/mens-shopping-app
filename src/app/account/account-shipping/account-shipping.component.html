@@ -1,0 +1,36 @@
+<div class="account shipping">
+  <div class="wrapper">
+
+    <h3>My Addresses</h3>
+
+    <div class="row">
+      <p class="align-right"><a (click)="addAddress()"><i class="fa fa-plus"></i> Add Shipping Address</a></p>
+
+      <p *ngIf="loading">Fetching shipping addresses&hellip;</p>
+      <p *ngIf="addresses.length === 0 && !loading">No shipping addresses found.</p>
+
+      <div *ngFor="let address of addresses" class="toggle-item row">
+        <div class="span9">
+          <div class="content">
+            <strong>{{ address.addresseeFirstName }} {{ address.addresseeLastName }}</strong><br/>
+            {{ address.addressLine1 }} {{ address.addressLine2 | deNull }} {{ address.city + ', ' + address.state + ' ' + address.zip }}
+
+            <div *ngIf="address.isDefault" class="default-badge">
+              <i class="fa fa-check-circle"></i> 
+              <span>Default Address</span>
+            </div>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="actions">
+            <div class="button edit" (click)="editAddress(address)">Edit</div>
+            <div class="button remove" (click)="removeAddress(address)" *ngIf="addresses.length > 1">Remove</div>
+          </div>
+        </div>
+        </div>
+      
+    </div>
+
+
+  </div>
+</div>

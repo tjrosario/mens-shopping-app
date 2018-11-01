@@ -1,0 +1,48 @@
+<div class="home experiment">
+	<div class="hero">
+	    <div class="masking">
+	        <div class="wrapper">
+	        	<div class="content">
+		            <h1>Style Made Easy</h1>
+		            <p>Tell us what you like and our lab does the rest.</p>
+
+		            <a routerLink="/signup" class="button button-large" *ngIf="!currentUser" (click)="trackGuest()">Get Started <i class="fa fa-caret-right"></i></a>
+
+		            <a routerLink="/account/orders" class="button button-large" *ngIf="currentUser" (click)="trackCustomer()">My Orders <i class="fa fa-caret-right"></i></a>
+
+		        </div>
+	        </div>
+	    </div>
+        <div class="trust">
+        	<div class="wrapper">
+        		<div class="span3 col-a">
+        			<img src="{{ assetUrl + '/assets/images/news-pr/today.png' }}" />
+        		</div>
+        		<div class="span3 col-b">
+        			<img src="{{ assetUrl + '/assets/images/news-pr/yelp.png' }}" />
+        		</div>
+        		<div class="span3 col-c">
+        			<img src="{{ assetUrl + '/assets/images/news-pr/dapperanddone.png' }}" />
+        		</div>
+        		<div class="span3 col-d">
+        			<img src="{{ assetUrl + '/assets/images/news-pr/beautybox.png' }}" />
+        		</div>
+        	</div>
+        </div>
+	</div>
+
+	<app-unique-offerings></app-unique-offerings>
+
+	<app-steps [user]="currentUser"></app-steps>
+
+	<app-box-selection [user]="currentUser"></app-box-selection>
+	
+	<!--
+	<app-facebook-page [appId]="facebookAppId" [pageId]="facebookPageId" [user]="currentUser"></app-facebook-page>-->
+
+	<app-benefits [user]="currentUser"></app-benefits>
+
+	<!--
+	<app-personal-shopper [user]="currentUser"></app-personal-shopper>
+-->
+</div>

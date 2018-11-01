@@ -1,0 +1,40 @@
+<form 
+  [formGroup]="orderItemRejectForm" 
+  (ngSubmit)="onSubmit()" 
+  novalidate>
+
+  <p>Want better results? Please let us know why this item didn't look good to you.  Your feedback will be stored in your preferences and will improve your future shipments.</p>
+
+  <div class="row">
+    <div class="field form-group">
+      <label>Reason for removal</label>
+      <select 
+        class="form-control"
+        name="rejectReasons"
+        formControlName="rejectReasons"
+        [(ngModel)]="data.rejectReasons[0]"
+        required
+        >
+        <option value="">Select a Reason</option>
+        <option 
+          *ngFor="let reason of rejectReasons" 
+          [ngValue]="reason.value"
+        >
+          {{ reason.text }}
+        </option>
+      </select>
+    </div>
+
+    <div class="field form-group">
+      <label>Comments</label>
+      <textarea 
+        class="form-control" 
+        name="comments"
+        formControlName="comments"
+        [(ngModel)]="data.comments"
+      ></textarea>
+    </div>
+
+  </div>
+
+</form>

@@ -1,0 +1,30 @@
+<div id="examples" class="examples">
+  
+  <div class="align-center">
+    <h1>Examples</h1>
+    <p>Brands, styles and products our customers love.</p>
+  </div>
+
+  <div *ngFor="let boxItem of boxItems">
+    <ul class="reset clear">
+      <li *ngFor="let box of boxItem.list">
+        <div class=" clear">
+          <div class="span6">
+            <div class="col-a">
+              <img src="{{ assetUrl + box.imagePathExample }}" />
+            </div>
+          </div>
+          <div class="span6">
+            <div class="col-b">
+              <h2>{{ box.title }}</h2>
+              <app-box-description [data]="box"></app-box-description>
+              
+              
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+</div>

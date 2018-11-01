@@ -1,0 +1,30 @@
+
+<div class="promo-modal">
+  <div class="modal-header">
+    <h4 class="modal-title">Coupon Code</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body align-center">
+
+    <div *ngIf="promoValid">
+      <img src="{{ assetUrl + '/assets/images/brandingPhotos/box-will.jpg' }}">
+      <p>You now qualify for <strong *ngIf="coupon.discount_type ==='dollars'">{{ coupon.discount_in_cents.USD._ | dollars }}</strong><strong *ngIf="coupon.discount_type ==='percent'">{{ coupon.discount_percent._ + '%' }}</strong> off your subscription!</p>
+
+    </div>
+
+    <div *ngIf="!promoValid">
+      <p>We're sorry this promo is not redeemable at this time.</p>
+      <app-get-started-cta [user]="currentUser" (click)="activeModal.dismiss('Cross click')"></app-get-started-cta>
+    </div>
+
+    <div class="actions" *ngIf="promoValid">
+      <a class="button button-large" routerLink="/account/subscriptions" (click)="activeModal.dismiss('Cross click')">Yes, Save The Deal <i class="fa fa-caret-right"></i></a>
+
+      <div (click)="cancel()" class="cancel">No thanks</div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,10 @@
+<div class="bio-entry align-center">
+  <div class="photo align-center" (click)="viewBio(member)">
+    <img src="{{ assetUrl + member.imageUrl }}" alt="{{ member.name }}, {{ member.title }}">
+  </div>
+  <div class="content">
+    <h4>{{ member.name }}</h4>
+    <h5>{{ member.title }}</h5>
+    <p><span class="link" (click)="viewBio(member)">View Bio <i class="fa fa-caret-right"></i></span></p>
+  </div>
+</div>

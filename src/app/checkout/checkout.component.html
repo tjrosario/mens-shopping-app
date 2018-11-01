@@ -1,0 +1,61 @@
+<div class="checkout">
+
+  <div class="wrapper">
+
+    <div class="step" id="checkout_step_1">
+      <div class="step-content">
+        <h3>Select Your Budget</h3>
+        <p>We'll match the total value of the items in your Order Preview with the Budget you select here. <br>On the next step, you can select the types of clothing you're looking for.</p>
+
+        <app-box-selection 
+          [onSelection]="selectBudget.bind(this)"
+          [showHeadline]="false"
+          [showGetStarted]="false"
+          [btnText]="boxSelectorTxt"
+        >  
+        </app-box-selection>
+      </div>
+    </div>
+
+    <div class="step" id="checkout_step_2">
+      <div class="step-content">
+        <h3>Select the Clothes You Want in this Order</h3>
+        <p>Select up to <strong><span>{{ numCategories }}</span> types</strong> of clothing you're interested in.</p>
+
+        <div class="categories buttons col3-mobile">
+          <app-checkbox-list
+            [data]="productCategories"
+            [limit]="numCategories"
+            [labelField]="'name'"
+            [hasMedia]="true"
+          >
+          </app-checkbox-list>
+
+          <div class="control align-center">
+            <div class="inner">
+              <button 
+                type="submit" 
+                class="button button-dark button-placeorder"
+                [class.loading]="loading" 
+                [disabled]="!isRequiredFieldsValid() || loading" 
+                (click)="onSubmit()">
+                Proceed to Checkout
+              </button>
+
+              <a class="button button-transparent" 
+                (click)="goToStep(1)">
+                Previous
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <small class="fine-print">Icons by <a href="http://www.freepik.com" title="Freepik">Freepik</a> and <a href="http://www.flaticon.com/authors/roundicons" title="Roundicons">Roundicons</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a></small>
+        
+      </div>
+    </div>
+
+  </div>
+
+</div>

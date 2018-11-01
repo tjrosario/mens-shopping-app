@@ -1,0 +1,237 @@
+<div class="admin customers">
+  <div class="wrapper">
+    <h3>Customers</h3>
+
+    <form 
+        class=""
+      [formGroup]="customerForm" 
+      (ngSubmit)="onSubmit()" 
+      novalidate>
+
+      <p>Search by any of the following fields:</p>
+      <div class="row">
+          <div class="field form-group span4">
+            <input 
+              type="email" 
+              class="form-control" 
+              name="email"
+              formControlName="email"
+              placeholder="Email address" 
+            >
+          </div>
+
+          <div class="field form-group span3">
+            <input 
+              type="text" 
+              class="form-control" 
+              name="firstName"
+              formControlName="firstName"
+              placeholder="First Name" 
+            >
+          </div>
+
+          <div class="field form-group span3">
+            <input 
+              type="text" 
+              class="form-control" 
+              name="lastName"
+              formControlName="lastName"
+              placeholder="Last Name" 
+            >
+          </div>
+
+          <div class="span2">
+            <button 
+              type="submit" 
+              class="button button-large"
+              [class.loading]="loading"
+              [disabled]="!isValid() || loading">
+              Search
+            </button>
+          </div>
+        </div>
+    </form>
+
+    <p *ngIf="loading">Fetching customers&hellip;</p>
+    <p *ngIf="customers && customers.length === 0 && !loading">No customers found.</p>
+
+    <div *ngFor="let customer of customers" class="toggle-item row">
+      <div class="span9">
+        <div class="content">
+
+            <div class="row">
+                <div class="span6">
+                  <p>
+                    <strong>{{ customer.firstName }} {{ customer.lastName }}</strong><br/>
+                    {{ customer.email }}
+                  </p>
+                </div>
+                <div class="span6">
+                    <p>
+                        Sign Up Date: <span style="color:#999">{{ customer.signUpDate | date: 'MM/dd/yyyy' }}</span><br/>
+                        Sign Up Method: <span style="color:#999">{{ customer.signUpMethod }}</span>
+                    </p>
+                </div>
+                </div>
+
+
+                <ngb-tabset #t="ngbTabset">
+                    <ngb-tab title="Overview" id="tab-profile">
+                        <ng-template ngbTabContent>
+
+                            <app-user-profile-form 
+                              [user]="customer"
+                              [onSubmit]="onProfileSubmit.bind(this)"
+                              [loading]="profileLoading"
+                            >     
+                            </app-user-profile-form>
+
+                        </ng-template>
+                    </ngb-tab>
+
+                    <ngb-tab title="Orders" id="tab-orders">
+                        <ng-template ngbTabContent>
+                            <p *ngIf="customer.orders.length === 0">No orders found.</p>
+
+                        <div *ngFor="let order of customer.orders" class="toggle-item customer-order">
+                          <header class="row">
+                            <div class="span3">
+                              <span class="header">Placed</span><br/>
+                              {{ order.dateCreated | date: 'MM/dd/yyyy' }}
+                            </div>
+                            <div class="span3">
+                              <span class="header">Status</span><br/>
+                              {{ order.status | orderStatus }}
+                            </div>
+                            <div class="span3">
+                              <span class="header">Order #</span><br/>
+                              {{ order.orderNumber }}
+                            </div>
+                            <div class="span3 pricing">
+                              <span class="header">Total</span>
+                              <app-order-financials [data]="order"></app-order-financials>
+                            </div>
+                          </header>
+                        
+                          <div class="row">
+                            <div class="span9">
+                              <div class="content row">
+                                <div *ngIf="order.box" class="span4">
+                                  <img src="{{ assetUrl + order.box.imagePathAlt }}" alt="{{ order.box.description }}" class="photo" />
+                                </div>
+                                
+                                <div class="span8">
+                                  <div class="order-info">
+                                    <div *ngIf="order.box">
+                                      <h4>{{ order.box.title }} <small>({{ order.box.description }})</small></h4>
+                                    </div>
+
+                                    <p class="order-categories">
+                                      <strong>Categories:</strong>
+                                      <span *ngFor="let productNeed of order.productNeeds">{{ productNeed.productCategory.name }}</span>
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="span3">
+                              <div class="actions">
+                                <a class="button edit" [routerLink]="['/admin', 'orders', order.orderNumber]">View</a>
+
+                                <a class="button" target="_blank" href="{{opsUrl}}/order/show/{{order.id}}">View (BE)</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        </ng-template>
+                    </ngb-tab>
+
+                  <ngb-tab title="Subscriptions" id="tab-subscriptions">
+                    <ng-template ngbTabContent>
+                        <p *ngIf="customer.subscriptions.length === 0">No subscriptions found.</p>
+                        
+                      <div *ngFor="let subscription of customer.subscriptions" class="toggle-item">
+                        <header class="row">
+                          <div class="span3">
+                            <span class="header">Start Date</span><br/>
+                            {{ subscription.startDate | date: 'MM/dd/yyyy' }}
+                          </div>
+                          <div class="span3">
+                            <span class="header">Budget</span><br/>
+                            {{ subscription.budget | currency: '$' }}
+                          </div>
+                          <div class="span3">
+                            <span class="header">Status</span><br/>
+                            {{ subscription.status }}
+                          </div>
+                        </header>
+                        <div class="row">
+                          <div class="span9">
+                            <div class="content">
+                              <h4>{{ subscription.frequencyData.name }} subscription<br/><small>{{ subscription.budgetData.description }}</small></h4>
+
+                              <div *ngIf="!subscription.frequencyData.enabled" class="alert alert-warning">
+                                <strong>Attention:</strong> This plan is currently not available.  <br/>Click edit to select an available frequency.
+                              </div>
+
+                              <div *ngIf="subscription.notes" class="note">
+                                <h5>My Notes</h5>
+                                <em>{{ subscription.notes }}</em>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="span3">
+                            <div class="actions">
+                                <a class="button" target="_blank" href="{{opsUrl}}/subscription/show/{{subscription.id}}">View (BE)</a>
+
+                                <a class="button" target="_blank" href="{{stripeDashboardUrl}}/subscriptions/{{subscription.subscritionNumber}}" *ngIf="subscription.subscritionNumber">View <i class="fa fa-cc-stripe"></i></a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </ng-template>
+                  </ngb-tab>
+
+                    <ngb-tab title="Payment Methods" id="tab-billing">
+                        <ng-template ngbTabContent>
+                            <p *ngIf="cards.length === 0">No payment methods found.</p>
+
+                        <div *ngFor="let card of cards" class="toggle-item row">
+                          <div class="span9">
+                            <div class="content row">
+                              <div class="span2">
+                                <i class="fa fa-cc-{{ card.logo }} credit-card-logo"></i> 
+                              </div>
+                              <div class="span10">
+                                {{ card.name }}<br/>
+                                {{ card.brand }} ending in {{ card.last4 }}<br/>
+                                Expires {{ card.exp_month }}/{{ card.exp_year }}
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="span3">
+                            <div class="actions">
+                              
+                            </div>
+                          </div>
+                        </div>
+
+                        </ng-template>
+                    </ngb-tab>
+
+                </ngb-tabset>
+        </div>
+      </div>
+      <div class="span3">
+        <div class="actions" style="padding: 10px 0 0">
+          <a class="button" target="_blank" href="{{opsUrl}}/customer/show/{{customer.id}}">View Customer (BE)</a>
+          <a class="button" target="_blank" href="{{stripeDashboardUrl}}/customers/{{customer.paymentCustomerId}}" *ngIf="customer.paymentCustomerId">View Customer <i class="fa fa-cc-stripe"></i></a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

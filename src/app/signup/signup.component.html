@@ -1,0 +1,194 @@
+<div class="signup-view">
+
+  <div class="signup-progress">
+    <div class="wrapper">
+      <div class="row">
+        <div class="span1 control">&nbsp;
+          <i 
+            class="fa fa-caret-left" 
+            (click)="goToPreviousStep()"
+            [hidden]="completionPercentage === 0">
+          </i>
+        </div>
+
+        <div class="span10">
+          <div class="progress">
+            <div class="progress-bar"
+              [class.zero]="completionPercentage === 0"
+              role="progressbar"
+              [attr.valuenow]="completionPercentage" 
+              aria-valuenow="70"
+              aria-valuemin="0" 
+              aria-valuemax="100"
+              [style.width]="completionPercentagePretty"
+            >
+              <!--<span>{{ completionPercentagePretty }}</span>-->
+            </div>
+          </div>
+
+          <div class="row">
+            <div *ngFor="let section of steps"
+              [style.float]="'left'"
+              [style.width]="100 / steps.length + '%'"
+              class="section"
+              [class.active]="step.section === section.section"
+            > 
+              <div>{{ section.section }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="span1">
+          &nbsp;
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="wrapper">
+
+    <div class="align-center signup-container">
+
+      <!--
+      <div class="step" id="start_step_1" *ngIf="currentSection === 'start'">
+        <div class="form-box">
+          <h3>Get Started With ThreadLab</h3>
+          <p>Signing up will take 2 - 3 minutes depending on your caffeine level.</p> 
+          <p>We'll ask you simple questions on sizing, style and budget. If you aren't sure of an answer, guess and move on. Just like the SAT's.</p>
+          <p><small>You can edit your profile at any time after you sign up.</small></p>
+
+          <button class="button button-orange" type="button" (click)="start()">Let's Do This <i class="fa fa-caret-right"></i></button>
+        </div>
+      </div>
+      -->
+
+      <div *ngFor="let section of steps" class="step">
+        <div *ngFor="let step of section.steps; let i = index;" class="{{ section.id }}">
+          <app-signup-step
+            *ngIf="(section.id !== 'profile') && (currentSection === section.id && currentStep === i + 1)"
+            [data]="step.data"
+            [limit]="step.limit"
+            [section]="section.id"
+            [headline]="step.headline"
+            [text]="step.text"
+            [description]="step.description"
+            [pagingText]="step.pagingText"
+            [buttonClass]="step.buttonClass"
+            [submitBtnText]="step.submitBtnText"
+            [tertiaryBtnText]="step.tertiaryBtnText"
+            [selectHandler]="step.selectHandler"
+            [skipHandler]="step.skipHandler"
+            [disabledHandler]="step.disabledHandler"
+            [loadingHandler]="step.loadingHandler"
+            [type]="step.type"
+            [index]="i + 1"
+          >
+          </app-signup-step>
+        </div>
+      </div>
+
+
+      <div class="step profile" id="profile_step_1" *ngIf="currentSection === 'profile'">
+        <div class="step-content user-info">
+
+          <div class="form-box">
+            <h3>You're Almost Done</h3>
+            <p>Complete your profile to get started with ThreadLab and place your first order!</p>
+
+            <div class="actions align-center">
+              <button 
+                type="button" 
+                class="button facebook-btn" 
+                [class.loading]="loading"
+                (click)="facebookLogin()"
+                [disabled]="!signupFieldsValid() || loading || fbLoading">
+                <i class="fa fa-facebook"></i>
+                Sign up with Facebook
+              </button>
+            </div>
+
+            <p class="divide align-center"><strong><small>&ndash; or &ndash;</small></strong></p>
+
+            <form 
+              class="align-left" 
+              [formGroup]="signupForm" 
+              (ngSubmit)="onSubmit()" 
+              novalidate>
+
+              <div class="field form-group">
+                <label>First Name</label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  required
+                  name="firstName"
+                  formControlName="firstName"
+                >
+              </div>
+
+              <div class="field form-group">
+                <label>Last Name</label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  required
+                  name="lastName"
+                  formControlName="lastName"
+                >
+              </div>
+
+              <div class="field form-group">
+                <label>Email</label>
+                <input 
+                  type="email" 
+                  class="form-control" 
+                  required
+                  name="email"
+                  formControlName="email"
+                >
+              </div>
+
+              <div class="field form-group">
+                <label>Password</label>
+                <input 
+                  type="password" 
+                  class="form-control" 
+                  required
+                  name="password"
+                  formControlName="password"
+                >
+              </div>
+
+              <div class="submit align-center">
+                <button 
+                  type="submit" 
+                  class="button button-large"
+                  [class.loading]="loading"
+                  [disabled]="!signupFormValid() || loading || fbLoading">
+                  Create Your Account
+                </button>
+              </div> 
+            </form>
+
+          </div>
+
+          <div class="bonus">
+            <p><img src="{{ assetUrl + '/assets/images/icons/2017/athletic-socks.png' }}"/>
+            Free pair of socks with your first order when you sign up today!</p>
+          </div>
+
+        </div>
+      </div>
+
+      <p class="existing-user">
+        <span>
+          Already have an account? <a routerLink="/login">Sign in now <i class="fa fa-caret-right"></i></a>
+        </span>
+
+        <a routerLink="/home"><img src="{{ assetUrl + '/assets/images/logo/threadlab@2x.png' }}"></a>
+      </p>
+
+    </div>
+  </div>
+</div>

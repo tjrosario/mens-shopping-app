@@ -1,0 +1,30 @@
+<div class="module unique">
+  <div class="masking">
+    <div class="wrapper">
+      
+      <h2>What Makes ThreadLab Unique</h2>
+      <p class="lead">We know there's a wide variety of subscription clothing services and online personal shoppers out there.<br/>Here are a few things that make ThreadLab different, fun and awesome:</p>
+
+      <div class="row">
+        <div class="span6">
+          <ngb-accordion #acc="ngbAccordion" [closeOthers]="true" activeIds="unique1">
+
+            <ngb-panel *ngFor="let offering of offerings">
+              <ng-template ngbPanelTitle>
+                <h4 class="title" (click)="track(offering)"><i class="{{ offering.icon }}" aria-hidden="true"></i>{{ offering.title }}</h4>
+              </ng-template>
+              <ng-template ngbPanelContent>
+                <p>{{ offering.description }}</p>
+              </ng-template>
+            </ngb-panel>
+
+          </ngb-accordion>
+
+        </div>
+        <div class="span6 col-b">
+          <img src="{{ assetUrl + '/assets/images/brandingPhotos/box-199.png' }}">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

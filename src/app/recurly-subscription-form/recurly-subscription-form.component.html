@@ -1,0 +1,219 @@
+<form 
+  [formGroup]="recurlySubscriptionForm" 
+  (ngSubmit)="onSubmit()" 
+  class="subscription-form" 
+  novalidate>
+
+  <div class="row">
+
+    <div class="field form-group span6">
+      <label>Budget</label>
+      <select 
+        class="form-control"
+        required 
+        name="budget"
+        formControlName="budget"
+        [(ngModel)]="data['budget']"
+        (change)="updateForm()"
+        [hidden]="loadingPlans"
+        >
+
+        <option value="undefined" selected>Select a Budget</option>
+
+        <option 
+          *ngFor="let budget of budgets" 
+          [ngValue]="budget.unit_amount_in_cents.USD._"
+        >
+        {{ budget.unit_amount_in_cents.USD._ | dollars }} ({{ budget.description }})
+        </option>
+      </select>
+
+      <div class="loader" [hidden]="!loadingPlans">
+        <i class="fas fa-spinner fa-spin"></i>
+        Loading&hellip;
+      </div>
+    </div>
+
+    <div class="field form-group span6">
+      <label>Frequency</label>
+      <select 
+        class="form-control"
+        required 
+        name="frequency_code"
+        formControlName="frequency_code"
+        [(ngModel)]="data['frequency_code']"
+        (change)="updateForm()"
+        [hidden]="loadingPlans"
+        >
+
+        <option value="undefined" selected>Select a Frequency</option>
+
+        <option 
+          *ngFor="let frequency of frequencies" 
+          [ngValue]="frequency.plan_frequency_code"
+        >
+        {{ frequency.plan_interval_display_string }}
+        </option>
+      </select>
+
+
+      <input 
+        type="hidden"
+        name="plan_code"
+        formControlName="plan_code"
+        [(ngModel)]="data['plan_code']"
+      />
+
+      <div class="loader" [hidden]="!loadingPlans">
+        <i class="fas fa-spinner fa-spin"></i>
+        Loading&hellip;
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <!--
+    <div class="span5">
+      <div class="field form-group date">
+        <label>Start Date</label>
+
+        <ngb-datepicker 
+          #dp 
+          [(ngModel)]="startDate" 
+          formControlName="startDate"
+          name="startDate"
+          [startDate]="startDate"
+          [minDate]="minDate"
+        >
+        </ngb-datepicker>
+      </div>
+    </div>
+
+    <div class="span7">
+
+    </div>-->
+
+    <div class="field form-group">
+      <label>Notes</label>
+
+      <textarea 
+        type="text" 
+        class="form-control"
+        name="customer_notes"
+        rows="2"
+        formControlName="customer_notes"
+        [(ngModel)]="data['customer_notes']"
+        placeholder="eg - T-shirts in the summer, sweaters in the winter"
+      ></textarea>
+    </div>
+
+  </div>
+
+
+  <div class="row">
+    <div class="field form-group">
+      <label>Shipping Address</label>
+
+      <div [hidden]="shippingInfo">
+        <a class="link" (click)="addShippingAddress()">Add Shipping Address</a>
+      </div>
+
+      <div *ngIf="shippingAddresses && shippingAddresses.length > 0">
+        <select 
+          class="form-control" 
+          name="selectedAddress"
+          formControlName="address"
+          [(ngModel)]="selectedAddress"
+          (change)="selectAddress(selectedAddress)"
+          >
+          <option 
+            *ngFor="let address of shippingAddresses" 
+            [ngValue]="address.id">
+            {{ address.addressLine1 }} {{ address.addressLine2 | deNull }} {{ address.city + ', ' + address.state + ' ' + address.zip }}
+          </option>
+        </select>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="field form-group">
+      <label>Payment Method</label>
+
+      <div [hidden]="billingInfo">
+        <div class="form-box wide">
+          <app-recurly-form 
+            [data]="billingInfo" 
+            [onSubmit]="updatePaymentMethod.bind(this)"
+            [newCustomer]="true"
+            [loading]="loadingPayment"
+          >
+          </app-recurly-form>
+        </div>
+      </div>
+
+      <div class="payment-methods" *ngIf="billingInfo">
+        <ul>
+          <li class="row">
+            <div class="span8">
+              <!-- <input type="radio" /> -->
+              Credit Card <span>({{ billingInfo.card_type }} ending in {{ billingInfo.last_four }})</span>
+            </div>
+            <div class="span4 align-right">
+              <i class="fa fa-cc-{{ selectedCreditCardBrand.id }} credit-card-logo"></i>
+            </div>
+          </li>
+<!--
+          <li class="row" (click)="selectPaymentMethod('paypal')">
+            <div class="span8">
+              <input type="radio" />
+              <span>PayPal</span>
+            </div>
+            <div class="span4 align-right">
+               <i class="fa fa-cc-paypal credit-card-logo"></i>
+            </div>
+          </li>
+          
+          
+          <li class="row">
+            <div class="span8">
+              <input type="radio" />
+              <span>Apple Pay</span>
+            </div>
+            <div class="span4 align-right">
+               <i class="fab fa-apple-pay credit-card-logo"></i>
+            </div>
+          </li>
+          <li class="row">
+            <div class="span8">
+              <input type="radio" />
+              <span>Amazon Pay</span>
+            </div>
+            <div class="span4 align-right">
+               <i class="fab fa-amazon-pay credit-card-logo"></i>
+            </div>
+          </li>
+          -->
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="mode === 'add'">
+
+    <div class="field form-group span6">
+      <label>Coupon Code</label>
+
+      <input 
+        type="text"
+        name="coupon_code"
+        formControlName="coupon_code"
+        [(ngModel)]="data['coupon_code']"
+      />
+    </div>
+
+  </div>
+
+</form>

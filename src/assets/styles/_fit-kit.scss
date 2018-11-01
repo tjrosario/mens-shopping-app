@@ -1,0 +1,37 @@
+.fit-kit {
+  .address-select {
+    margin: 0 0 $gutter;
+    text-align: center;
+
+    select {
+      display: inline-block;
+      width: auto;
+    }
+  }
+
+  .field {
+    &.type,
+    &.default {
+      display: none;
+    }
+
+
+    &.addressee-email {
+      label {
+        span {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .photo {
+    @include media($tablet) {
+      display: none;
+    }
+
+    img {
+      padding-left: $gutter;
+    }
+  }
+}

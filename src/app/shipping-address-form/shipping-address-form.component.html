@@ -1,0 +1,173 @@
+<form 
+  [formGroup]="shippingForm" 
+  (ngSubmit)="onFormSubmit()" 
+  class="shipping-form"
+  novalidate>
+
+  <div class="row">
+    <div class="field form-group span6">
+      <label>First Name</label>
+      <input 
+        type="text" 
+        class="form-control" 
+        required
+        name="addresseeFirstName"
+        formControlName="addresseeFirstName"
+        [(ngModel)]="data.addresseeFirstName"
+      >
+    </div>
+
+    <div class="field form-group span6">
+      <label>Last Name</label>
+      <input 
+        type="text" 
+        class="form-control" 
+        required
+        name="addresseeLastName"
+        formControlName="addresseeLastName"
+        [(ngModel)]="data.addresseeLastName"
+      >
+    </div>
+  </div>
+
+  <div class="field form-group">
+    <label>Street Address</label>
+    <input 
+      type="text" 
+      class="form-control" 
+      required
+      name="addressLine1"
+      formControlName="addressLine1"
+      autocomplete="shipping address-line1"
+      [(ngModel)]="data.addressLine1"
+    >
+  </div>
+
+  <div class="field form-group">
+    <label>Apartment/Suite</label>
+    <input 
+      type="text" 
+      class="form-control" 
+      name="addressLine2"
+      formControlName="addressLine2"
+      autocomplete="shipping address-line2"
+      [(ngModel)]="data.addressLine2"
+    >
+  </div>
+
+  <div class="row">
+    <div class="field form-group span4">
+      <label>City</label>
+      <input 
+        type="text" 
+        class="form-control" 
+        required
+        name="city"
+        formControlName="city"
+        autocomplete="shipping locality"
+        [(ngModel)]="data.city"
+      >
+    </div>
+
+    <div class="field form-group span4">
+      <label>State</label>
+      <select 
+        class="form-control"
+        required 
+        name="state"
+        formControlName="state"
+        autocomplete="shipping region"
+        [(ngModel)]="data.state"
+        >
+        <option value="">Select State</option>
+        <option 
+          *ngFor="let state of states" 
+          [ngValue]="state.abbr"
+        >
+          {{ state.name }}
+        </option>
+      </select>
+    </div>
+
+    <div class="field form-group span4">
+      <label>Zipcode</label>
+      <input 
+        type="text" 
+        class="form-control" 
+        required
+        name="zip"
+        formControlName="zip"
+        [textMask]="{ mask: masks.zip }"
+        autocomplete="shipping postal-code"
+        [(ngModel)]="data.zip"
+      >
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="field form-group span4">
+      <label>Phone</label>
+      <input 
+        type="tel" 
+        class="form-control" 
+        required
+        name="addresseePhone"
+        formControlName="addresseePhone"
+        [textMask]="{ mask: masks.phone }"
+        autocomplete="tel"
+        [(ngModel)]="data.addresseePhone"
+      >
+    </div>
+
+
+    <div class="field form-group span4 opt default">
+      <label>
+        <input 
+          type="checkbox" 
+          class="form-control" 
+          formControlName="isDefault"
+          [(ngModel)]="data.isDefault"
+        /> Default Address
+      </label>
+    </div>
+
+    <!--
+    <div class="field form-group span4 hidden">
+      <label>Email</label>
+      <input 
+        type="email" 
+        class="form-control" 
+        required
+        name="addresseeEmail"
+        formControlName="addresseeEmail"
+        autocomplete="email"
+        [(ngModel)]="data.addresseeEmail"
+      >
+    </div> -->
+  </div>
+
+  <input type="hidden"
+    name="type"
+    formControlName="type"
+    [(ngModel)]="data.type"
+  >
+
+  <div class="actions" *ngIf="showActions">
+    <button 
+      type="submit" 
+      class="button button-dark"
+      [class.loading]="loading"
+      [disabled]="loading || disabled"
+    >
+      Add Address
+    </button>
+
+    <button 
+      type="button" 
+      class="button button-default"
+      (click)="onCancel()"
+    >
+      Cancel
+    </button>
+  </div>
+</form>

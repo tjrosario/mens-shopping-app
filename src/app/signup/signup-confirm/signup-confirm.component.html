@@ -1,0 +1,19 @@
+<div class="step account-confirm">
+  <div class="wrapper">
+      <h1>Success! Account Created</h1>
+
+      <div class="row">
+          <div class="span8 col-a">
+              <h3>The final step is to select your Budget, Frequency and the Products you need.</h3>
+
+              <p>We just sent a confirmation to: <strong>{{ currentUser.email }}</strong>. <br>Make sure you get your important account information by adding <a href="mailto:service@mythreadlab.com">service@mythreadlab.com</a> to your list of safe senders.</p>
+
+              <a routerLink="/account/subscriptions" class="button button-large">Next <i class="fa fa-caret-right"></i></a>
+          </div>
+
+          <div class="span4 col-b">
+              <img src="{{ assetUrl + '/assets/images/brandingPhotos/full-kit-spread.png' }}">
+          </div>
+      </div>
+  </div>
+</div>

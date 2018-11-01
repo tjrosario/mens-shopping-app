@@ -1,0 +1,10 @@
+.subscriptions-public {
+  .hero {
+    background-image: url('#{$asset-url}/lifestyle/medium-box-fall2016.png');
+    background-position: right -38px;
+
+    @include media($tablet) {
+      background-image: none;
+    }
+  }
+}

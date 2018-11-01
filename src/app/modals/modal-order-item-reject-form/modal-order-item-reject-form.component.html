@@ -1,0 +1,19 @@
+<div class="modal-header">
+  <h4 class="modal-title">Remove Item</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+	<app-order-item-reject-form [data]="orderItem"></app-order-item-reject-form>
+</div>
+<div class="modal-footer">
+  <button 
+  	type="submit"
+  	[disabled]="!orderItemRejectForm.orderItemRejectForm.valid" 
+  	class="button button-orange" 
+  	(click)="activeModal.close(orderItemRejectForm)"
+  >
+  	Save
+  </button>
+</div>

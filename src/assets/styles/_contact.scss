@@ -1,0 +1,46 @@
+.contact {
+  form {
+    @include media($desktop) {
+      padding: 0 $gutter 0 0;
+    }
+  }
+
+  h2 {
+    margin-bottom: 10px;
+  }
+
+  h3 {
+    //font-size: 14px;
+    margin-bottom: 0;
+  }
+
+  p {
+    margin-top: 0;
+  }
+
+  .col-b {
+    @include media($tablet) {
+      text-align: center;
+    } 
+  }
+
+  .form-box {
+    @include media($tablet) {
+      margin-bottom: $gutter * 2;
+    }
+  }
+
+  #map-canvas {
+    border-radius: 5px;
+    height: 250px;
+    margin: 0 0 $gutter;
+    width: 100%;
+  }
+
+  .company-address {
+    .logo,
+    .phone {
+      display: none;
+    }
+  }
+}

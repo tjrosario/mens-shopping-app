@@ -1,0 +1,94 @@
+<div class="admin orders">
+  <div class="wrapper">
+    <h3>Orders</h3>
+
+    <form 
+  		class=""
+      [formGroup]="orderForm" 
+      (ngSubmit)="onSubmit()" 
+      novalidate>
+
+      <p>Search by any of the following fields:</p>
+      <div class="row">
+	      <div class="field form-group span3">
+	        <input 
+	          type="text" 
+	          class="form-control" 
+	          name="orderNumber"
+	          formControlName="orderNumber"
+	          placeholder="Order No." 
+	          required 
+	        >
+	      </div>
+	      <div class="span2">
+	        <button 
+	          type="submit" 
+	          class="button button-large"
+	          [class.loading]="loading"
+	          [disabled]="!orderForm.valid || loading">
+	          Search
+	        </button>
+	      </div>
+	    </div>
+    </form>
+
+    <p *ngIf="loading">Fetching orders&hellip;</p>
+    <p *ngIf="orders && orders.length === 0 && !loading">No orders found.</p>
+
+    <div *ngFor="let order of orders" class="toggle-item customer-order">
+      <header class="row">
+      	<div class="span3">
+      		<span class="header">Customer</span><br/>
+      		{{ order.customer.firstName }} {{ order.customer.lastName }}
+      	</div>
+        <div class="span2">
+          <span class="header">Placed</span><br/>
+          {{ order.dateCreated | date: 'MM/dd/yyyy' }}
+        </div>
+        <div class="span3">
+          <span class="header">Status</span><br/>
+          {{ order.status | orderStatus }}
+        </div>
+        <div class="span2">
+          <span class="header">Order #</span><br/>
+          {{ order.orderNumber }}
+        </div>
+        <div class="span2 pricing">
+          <span class="header">Total</span>
+          <app-order-financials [data]="order"></app-order-financials>
+        </div>
+      </header>
+    
+      <div class="row">
+        <div class="span9">
+          <div class="content row">
+            <div *ngIf="order.box" class="span4">
+              <img src="{{ assetUrl + order.box.imagePathAlt }}" alt="{{ order.box.description }}" class="photo" />
+            </div>
+            
+            <div class="span8">
+              <div class="order-info">
+                <div *ngIf="order.box">
+                  <h4>{{ order.box.title }} <small>({{ order.box.description }})</small></h4>
+                </div>
+
+                <p class="order-categories">
+                  <strong>Categories:</strong>
+                  <span *ngFor="let productNeed of order.productNeeds">{{ productNeed.productCategory.name }}</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="actions">
+            <a class="button edit" [routerLink]="['/admin', 'orders', order.orderNumber]">View</a>
+
+            <a class="button" target="_blank" href="{{opsUrl}}/order/show/{{order.id}}">View (BE)</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

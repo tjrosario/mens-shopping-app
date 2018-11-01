@@ -1,0 +1,188 @@
+<div class="order-pricing"
+  [class.expanded]="showBreakdown"
+>
+  <div *ngIf="data['status'] === 'initialized'">
+    <div class="row">
+      <div class="span6 col-a">
+        <p>
+          <strong>Your Budget:</strong>
+        </p>
+      </div>
+      <div class="span6 col-b align-right">
+        <p>
+          <span class="value">{{ data.budget | currency: '$' }}</span>
+        </p>
+      </div>
+    </div>
+    <div class="row" *ngIf="data.applicableCustomerCredit > 0">
+      <div class="span6">
+        <p><strong>Store Credit:</strong></p>
+      </div>
+      <div class="span6 align-right">
+        <p><span class="value">{{ data.applicableCustomerCredit | currency: '$' }}</span></p>
+      </div>
+    </div>
+    <div class="row" *ngIf="data.applicableGiftCardCredit > 0">
+      <div class="span6">
+        <p><strong>Gift Card:</strong></p>
+      </div>
+      <div class="span6 align-right">
+        <p><span class="value">{{ data.applicableGiftCardCredit | currency: '$' }}</span></p>
+      </div>
+    </div>
+    <div class="row" *ngIf="data.promoCode">
+      <div class="span6 col-a">
+        <p><strong>Discounts:</strong></p>
+      </div>
+      <div class="span6 col-b align-right">
+        <p><span class="value">{{ data.promoCode }}</span></p>
+      </div>
+    </div>
+    <div class="row grand-total">
+      <div class="span6 col-a">
+        <p class="price-emphasized">
+          <span>Amount Due:</span>
+        </p>
+      </div>
+      <div class="span6 col-b align-right last">
+        <p class="price-emphasized">
+          <span class="value">{{ data['invoiceValue'] | currency: '$' }}</span>
+          </p>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="data['status'] !== 'initialized'">
+    <!--
+    <div class="row" [hidden]="!showBreakdown">
+      <div class="span6 col-a">
+        <p class="">
+          Your Budget:
+        </p>
+      </div>
+      <div class="span6 col-b align-right">
+        <p>
+          <span class="value">{{ data.budget | currency: '$' }}</span>
+        </p>
+      </div>
+    </div>
+  -->
+    
+    <div class="row">
+      <div class="span6 col-a">
+        <p class="">Order Value:</p>
+      </div>
+      <div class="span6 col-b align-right">
+        <p><span class="value">{{ data.value | currency: '$' }}</span></p>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="data.discount" [hidden]="!showBreakdown">
+      <div class="span6 col-a  alt">
+        <p>
+          <span>Discounts <span *ngIf="data.promoCode">({{ data.promoCode }})</span>:</span>
+        </p>
+      </div>
+      <div class="span6 col-b align-right alt">
+        <p><span class="value">{{ data.discount | currency: '$' }}</span></p>
+      </div>
+    </div>
+
+    <!--
+    <div class="row">
+      <div class="span6 col-a">
+        <p class="">Your Order Total:</p>
+      </div>
+      <div class="span6 col-b align-right last">
+        <p><span class="value">{{ data.netPrice | currency: '$' }}</span></p>
+      </div>
+    </div>-->
+    
+    <div *ngFor="let payment of data.payments">
+      <div *ngIf="payment.paymentMethod === 'customerCredit' && payment.paymentAmount > 0" class="row">
+        <div class="span6  alt">
+          <p><span>Store Credit:</span></p>
+        </div>
+        <div class="span6 align-right alt">
+          <p><span>{{ payment.paymentAmount | currency: '$' }}</span></p>
+        </div>
+      </div>
+
+      <div *ngIf="payment.paymentMethod === 'giftCardCredit' && payment.paymentAmount > 0" class="row">
+        <div class="span6 alt">
+          <p><span>Gift Card:</span></p>
+        </div>
+        <div class="span6 align-right alt">
+          <p><span>{{ payment.paymentAmount | currency: '$' }}</span></p>
+        </div>
+      </div>
+
+      <div *ngIf="payment.paymentMethod === 'stripe' || payment.paymentMethod === 'paypal'">
+        <div *ngIf="payment.paymentAmount > 0" class="row">
+          <div class="span6  alt">
+            <p>
+              <span *ngIf="payment.paymentMethod === 'stripe'">Payment:</span>
+              <span *ngIf="payment.paymentMethod === 'paypal'">Payment:</span>
+            </p>
+          </div>
+          <div class="span6 align-right alt">
+            <p><span>{{ payment.paymentAmount | currency: '$' }}</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="data['status'] !== 'finalized'">
+      <!--
+      <div class="row price-retail" *ngIf="data.retailValue > data.value">
+        <div class="span6 col-a">
+          <p>Retail Value:</p>
+        </div>
+        <div class="span6 align-right col-b">
+            <p>
+              <span class="value">{{ data.retailValue | currency: '$' }}</span>
+              
+              <span class="price-emphasized">({{ data.retailValue - data.value | currency: '$' }} Saved)</span>
+            </p>
+        </div>
+      </div>-->
+
+      <div class="row grand-total" *ngIf="data['invoiceValue'] > 0">
+        <div class="span6 col-a">
+          <p class="price-emphasized">Your Savings:</p>
+        </div>
+        <div class="span6 align-right col-b">
+          <p class="price-emphasized">{{ data['invoiceValue'] | currency: '$' }}</p>
+        </div>
+      </div>
+
+      <div class="row grand-total" *ngIf="data['invoiceValue'] < 0">
+        <div class="span6 col-a">
+          <p class="price-emphasized">Your Refund:</p>
+        </div>
+        <div class="span6 align-right col-b">
+          <p class="price-emphasized">{{ (data['invoiceValue'] | makePositive) | currency: '$' }} *</p>
+        </div>
+      </div>
+
+      <!--
+      <div class="link align-center" 
+        [class.active]="showBreakdown"
+        (click)="toggleBreakdown()">
+        <small>
+          <span [hidden]="showBreakdown">View details</span>
+          <span [hidden]="!showBreakdown">Hide details</span>
+          <i class="fa fa-caret-right default"></i>
+          <i class="fa fa-caret-up activate"></i>
+        </small>
+      </div>-->
+    </div>
+
+  </div>
+</div>
+
+<div *ngIf="data['invoiceValue'] < 0" class="note">
+  <p>
+    <small>* <span class="link black" (click)="openUnderfilled(data['status'])">Why am I getting a refund?</span></small>
+  </p>
+</div> 

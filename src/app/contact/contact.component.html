@@ -1,0 +1,118 @@
+<div class="contact">
+    <div class="wrapper">
+        <h1>Contact Us</h1>
+
+        <div class="row">
+            <div class="span7 col-a">
+                <div class="form-box">
+                    <h3>Send us a message</h3>
+                    <form 
+                        [formGroup]="contactForm" 
+                        (ngSubmit)="onSubmit()" 
+                        novalidate>
+                        <p>Please fill out the form below and we'll get back to you within a few hours.</p>
+                        <div class="field form-group">
+                            <label>Your Name</label>
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                required
+                                name="name"
+                                formControlName="name"
+                            >
+                        </div>
+                        <div class="field form-group">
+                            <label>Email</label>
+                            <input 
+                                type="email" 
+                                class="form-control" 
+                                required
+                                name="email"
+                                formControlName="email"
+                            >
+                        </div>
+                        <div class="field form-group">
+                            <label>Subject</label>
+                            <select 
+                                class="form-control" 
+                                required
+                                name="subject"
+                                formControlName="subject"
+                                >
+                                <option 
+                                    *ngFor="let subject of subjects" 
+                                    [ngValue]="subject.title">{{ subject.title }}</option>
+                            </select>
+                        </div>
+                        <div class="field form-group">
+                            <label>Message</label>
+                            <textarea 
+                                cols="3" 
+                                rows="3" 
+                                class="form-control" 
+                                required
+                                name="message"
+                                formControlName="message"
+                            ></textarea>
+                        </div>
+                        <div class="submit">
+                            <button 
+                                type="submit" 
+                                class="button button-large"
+                                [class.loading]="loading"
+                                [disabled]="!contactForm.valid || loading">
+                                Send Message
+                            </button>
+                        </div> 
+                    </form>
+                </div>
+            </div>
+
+            <div class="span5 col-b">
+                <h4>Contact Information</h4>
+
+                <div class="box-plain row">
+                    <div class="span2 align-center">
+                        <i class="fa fa-map-pin" aria-hidden="true"></i>
+                    </div>
+                    <div class="span10">
+                        <app-company-address></app-company-address>
+                        <a href="https://goo.gl/maps/yd5LmFydZQT2" target="_blank" class="view">View Map <i class="fa fa-caret-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- BEGIN OLARK CHAT LINK -->
+                <div class="box-plain row">
+                    <div class="span2 align-center">
+                        <i class="fa fa-comments"></i> 
+                    </div>
+                    <div class="span10">
+                        <a href="javascript:void(0);" onclick="olark('api.box.expand')">Chat With Us</a>
+                    </div>
+                </div>
+                <!-- END OLARK CHAT LINK -->
+
+                <div class="box-plain row">
+                    <div class="span2 align-center">
+                        <i class="fa fa-envelope"></i> 
+                    </div>
+                    <div class="span10">
+                        <a href="mailto:service@mythreadlab.com">service@mythreadlab.com</a>
+                    </div>
+                </div>
+
+                <div class="box-plain row">
+                    <div class="span2 align-center">
+                        <i class="fa fa-phone"></i> 
+                    </div>
+                    <div class="span10">
+                        <a href="tel:+1-{{ address.phone }}" itemprop="telephone">{{ address.phone }}</a>
+                    </div>
+                </div>
+
+                <app-social-media></app-social-media>
+            </div>
+        </div>
+
+    </div>
+</div>

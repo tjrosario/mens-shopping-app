@@ -1,0 +1,16 @@
+<nav class="row">
+  <div *ngFor="let section of sections" class="span3">
+    <h5>{{ section.category }}</h5>
+
+    <ul class="reset">
+      <li *ngFor="let navItem of section.items">
+        <a *ngIf="navItem.external" href="{{ navItem.link }}" (click)="track(navItem)">
+          {{navItem.name}}
+        </a>
+        <a *ngIf="!navItem.external" routerLink="{{ navItem.link }}" (click)="track(navItem)">
+          {{navItem.name}}
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>

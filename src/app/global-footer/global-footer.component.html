@@ -1,0 +1,26 @@
+<footer id="footer" class="site-footer">
+  <div class="wrapper">
+    <div class="row">
+      <div class="span9 col-a">
+        <app-navigation [sections]="sections" [category]="footerCategory" [action]="footerNavAction"></app-navigation>
+      </div>
+
+      <div class="span3 col-b">
+        <h5>Social Media</h5>
+        <app-social-media></app-social-media>
+      </div>
+    </div>
+
+    <div class="row bottom">
+      <div class="span9">
+        <small>Copyright &copy; {{ today | date: 'yyyy' }} ThreadLab, Inc.</small>
+      </div>
+      <div class="span3">
+        <small>
+          <a routerLink="/terms">Terms of Use</a> &nbsp;|&nbsp; 
+          <a routerLink="/privacy">Privacy Policy</a>
+        </small>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,17 @@
+<div class="account profile">
+  <div class="wrapper">
+    <h3>My Profile</h3>
+
+    <div class="">
+        <app-user-profile-form 
+        	[user]="currentUser"
+        	[onSubmit]="onSubmit.bind(this)"
+        	[loading]="loading"
+        	[fbLoading]="fbLoading"
+        	[fbLink]="true"
+            [resetPassword]="true"
+        >			
+        </app-user-profile-form>
+    </div>
+  </div>
+</div>

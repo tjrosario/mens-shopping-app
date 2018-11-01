@@ -1,0 +1,20 @@
+<div id="faq" class="faq">
+  
+	<h1>FAQs</h1>
+	<div class="wrapper">
+
+		<ngb-accordion #acc="ngbAccordion">
+
+			<ngb-panel *ngFor="let faq of faqs">
+				<ng-template ngbPanelTitle>
+					<h4 class="title">{{ faq.question }}</h4>
+				</ng-template>
+				<ng-template ngbPanelContent>
+					<div [innerHTML]="faq.answer"></div>
+				</ng-template>
+			</ngb-panel>
+
+		</ngb-accordion>
+
+	</div>
+</div>

@@ -1,0 +1,25 @@
+.promos {
+  h1 {
+    padding-top: 0;
+  }
+
+  p {
+    strong {
+      text-transform: uppercase;
+    }
+  }
+
+  img {
+    border-radius: 4px;
+    margin: 0 auto $gutter;
+    max-width: 300px;
+
+    @include media($tablet) {
+      max-width: 50%;
+    }
+  }
+
+  .actions {
+    margin-top: $gutter * 2;
+  }
+}

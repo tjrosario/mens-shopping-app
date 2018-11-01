@@ -1,0 +1,43 @@
+<div class="module pricing-boxes boxes">
+  <div class="wrapper">
+
+    <h2 *ngIf="showHeadline">Which Box Are You?</h2>
+
+    <ul class="reset row box-list">
+      <li *ngFor="let plan of plans" 
+        class="{{ colClass }}"
+        (click)="onSelection(plan)"
+        >
+        <div class="box-info box-content"
+          [class.selected]="plan.selected"
+        >
+
+          <div class="row top">
+            <div class="photo">
+              <img src="{{ assetUrl + plan.box.imagePathAlt }}">
+            </div>
+
+            <div class="main">
+              <h3><span>{{ plan.name }}</span></h3>
+
+              <div class="price"><span>{{ plan.amount_in_cents | dollars }}</span></div>
+
+              <p class="value">
+                ({{ plan.box.value | currency: '$' }} value)
+              </p>
+            </div>
+          </div>
+
+          <div class="items">{{ plan.description }}</div>
+
+          <div class="cta" *ngIf="onSelection">
+            <a class="button button-large">
+              {{ btnText }}
+            </a>
+          </div>
+        </div>
+      </li>
+    </ul>
+
+  </div>
+</div>

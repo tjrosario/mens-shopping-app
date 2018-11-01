@@ -1,0 +1,101 @@
+<form 
+  [formGroup]="billingForm" 
+  (ngSubmit)="onSubmit()" 
+  novalidate>
+
+  <div class="row">
+    <div class="row">
+      <div class="field form-group span6">
+        <label>Name on Card</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          required
+          name="name"
+          formControlName="name"
+          [(ngModel)]="data.name"
+        >
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field form-group span6" *ngIf="mode ==='add'">
+        <label>Card</label>
+        <input 
+          class="form-control" 
+          required
+          name="number"
+          formControlName="number"
+          type="tel" 
+          autocomplete="cc-number" 
+          ccNumber
+          [(ngModel)]="data.number"
+          (keyup)="onKeyUp($event)"
+        >
+        
+        <ul class="card-logos">
+          <li class="visa" [class.active]="cardBrand === 'visa'"><i class="fa fa-cc-visa" aria-hidden="true"></i></li>
+          <li class="mastercard" [class.active]="cardBrand === 'mastercard'"><i class="fa fa-cc-mastercard" aria-hidden="true"></i></li>
+          <li class="amex"  [class.active]="cardBrand === 'amex'"><i class="fa fa-cc-amex" aria-hidden="true"></i></li>
+          <li class="discover" [class.active]="cardBrand === 'discover'"><i class="fa fa-cc-discover" aria-hidden="true"></i></li>
+          <li class="diners_club" [class.active]="cardBrand === 'diners_club'"><i class="fa fa-cc-diners-club" aria-hidden="true"></i></li>
+          <li class="jcb" [class.active]="cardBrand === 'jcb'"><i class="fa fa-cc-jcb" aria-hidden="true"></i></li>
+        </ul>
+      </div>
+
+      <div class="field form-group span2">
+        <label>Expiration</label>
+        <input 
+          class="form-control" 
+          required
+          name="expirationDate"
+          formControlName="expirationDate"
+          type="tel" 
+          autocomplete="cc-exp" 
+          ccExp
+          [(ngModel)]="data.expirationDate"
+        >
+      </div>
+
+      <div class="field form-group span2" *ngIf="mode ==='add'">
+        <label>CVC</label>
+        <input 
+          class="form-control" 
+          required
+          name="cvc"
+          formControlName="cvc"
+          type="tel"
+          autocomplete="off"
+          ccCVC
+          [(ngModel)]="data.cvc"
+        >
+      </div>
+    </div>
+    <div class="row">
+      <div class="field opt form-group">
+        <label>
+          <input 
+            type="checkbox" 
+            class="form-control"
+            name="isDefault"
+            formControlName="isDefault"
+            autocomplete="off"
+            [(ngModel)]="data.isDefault"
+          >
+          Set as default
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!--
+  <div class="submit">
+    <button 
+      type="submit" 
+      class="button button-large"
+      [class.loading]="loading">
+      Save Card
+    </button>
+  </div> -->
+
+</form>
